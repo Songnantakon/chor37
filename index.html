@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="ตารางแข่งขัน ผลสด และคะแนนสี ช่อชัยพฤกษ์เกมส์ ครั้งที่ 37 โรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร">
+<meta name="theme-color" content="#1a1f5e">
+<meta property="og:title" content="ช่อชัยพฤกษ์เกมส์ ครั้งที่ 37">
+<meta property="og:description" content="ตารางแข่งขัน ผลสด และคะแนนสี">
+<link rel="icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<title>ช่อชัยพฤกษ์เกมส์ 37</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,500;0,600;0,700;1,600;1,700;1,800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: dark masthead with live colour scoreboard, tabbed body (schedule / standings / athletics / staff) */
+:root{
+  --bg:#f2f4f7; --surface:#ffffff; --ink:#131c28; --muted:#586577; --line:#d9dfe8; --soft:#e9edf3;
+  --head:#101a28; --head-ink:#f4f7fb; --gold:#b9810f; --gold-bg:#fbf1d6; --ok:#17794a; --ok-bg:#dff3e8; --warn:#9a5b00; --warn-bg:#fdebc8; --err:#b3261e;
+  --c-เขียว:#1f9d4c; --c-ชมพู:#e0529a; --c-น้ำเงิน:#2457d6; --c-แดง:#d63030;
+  --f-d:'Prompt','Sarabun',system-ui,sans-serif; --f-b:'Sarabun','Prompt',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d131c; --surface:#161e2a; --ink:#e8edf4; --muted:#9aa7b8; --line:#2a3546; --soft:#1f2937;
+  --head:#080d14; --head-ink:#f4f7fb; --gold:#e3b04a; --gold-bg:#3a2e12; --ok:#58cf93; --ok-bg:#12301f; --warn:#f0b24a; --warn-bg:#3a2a0c; --err:#ff8a80;
+  --c-เขียว:#3ec16c; --c-ชมพู:#f06eb0; --c-น้ำเงิน:#5b8bff; --c-แดง:#ff5a5a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d131c; --surface:#161e2a; --ink:#e8edf4; --muted:#9aa7b8; --line:#2a3546; --soft:#1f2937;
+  --head:#080d14; --head-ink:#f4f7fb; --gold:#e3b04a; --gold-bg:#3a2e12; --ok:#58cf93; --ok-bg:#12301f; --warn:#f0b24a; --warn-bg:#3a2a0c; --err:#ff8a80;
+  --c-เขียว:#3ec16c; --c-ชมพู:#f06eb0; --c-น้ำเงิน:#5b8bff; --c-แดง:#ff5a5a; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-b);font-size:16px;line-height:1.5;padding-block:0}
+.wrap{max-width:980px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+header.mast{background:var(--head);color:var(--head-ink);padding-block:18px 0}
+.mast h1{font-family:var(--f-d);font-weight:600;font-size:clamp(22px,5vw,32px);line-height:1.2;margin:0;text-wrap:balance}
+.mast .sub{color:#aeb9c9;font-size:14px;margin:4px 0 10px}
+.mast .top{display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.mast .emb{width:44px;height:44px;flex:none;border-radius:12px;background:conic-gradient(var(--c-เขียว) 0 25%,var(--c-ชมพู) 0 50%,var(--c-น้ำเงิน) 0 75%,var(--c-แดง) 0);display:grid;place-items:center}
+.mast .emb span{width:30px;height:30px;border-radius:9px;background:var(--head);display:grid;place-items:center;font-family:var(--f-d);font-weight:700;color:#ffd470;font-size:14px}
+.mast .ttl{display:flex;gap:12px;align-items:center;min-width:0}
+.prog{display:flex;align-items:center;gap:10px;font-size:13px;color:#cdd6e3;margin:0 0 12px}
+.prog .bar{flex:1;height:6px;border-radius:9px;background:rgba(255,255,255,.12);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c-เขียว),var(--c-ชมพู),var(--c-น้ำเงิน),var(--c-แดง))}
+.dashbtn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:7px 12px;font-weight:600;font-size:14px;white-space:nowrap;flex:none}
+.score{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));}
+.sc{position:relative;padding:12px 8px 12px;text-align:center;border-top:5px solid var(--cc);background:linear-gradient(180deg,color-mix(in srgb,var(--cc) 30%,transparent),color-mix(in srgb,var(--cc) 6%,transparent))}
+.sc .rk{position:absolute;top:6px;left:8px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,.35);border-radius:999px;padding:0 7px;line-height:18px}
+.sc.lead .rk{background:#ffd470;color:#3a2a00}
+.sc b{display:block;font-family:var(--f-d);font-size:clamp(22px,6vw,34px);line-height:1.1;font-variant-numeric:tabular-nums}
+.sc span{font-size:13px;color:#cdd6e3}
+.sc.lead b{color:#ffd470}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+nav.tabs .wrap{display:flex;gap:4px;min-width:0}
+.tab{border:0;background:none;padding:13px 14px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.tab:hover{color:var(--ink)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--head);z-index:10}
+main{padding-block:16px 40px}
+.banner{background:var(--warn-bg);color:var(--ink);border-left:5px solid var(--warn);padding:10px 14px;margin-bottom:14px;border-radius:6px;font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:999px;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--cc,var(--muted));display:inline-block;flex:none;box-shadow:0 0 0 2px var(--surface)}
+.dayrow .chip{font-family:var(--f-d);font-weight:600}
+.dayrow .chip small{font-weight:400;opacity:.8;font-family:var(--f-b)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:8px;font-weight:600}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.sm{padding:5px 10px;font-size:14px}
+.btn.danger{color:var(--err)}
+.timeblock{margin-bottom:14px}
+.tb-h{font-family:var(--f-d);font-weight:600;font-size:15px;color:var(--muted);margin:14px 0 6px;display:flex;align-items:center;gap:10px}
+.tb-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(10,20,40,.05);padding:10px 12px;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 12px;align-items:center;margin-bottom:8px}
+.card .tm{font-family:var(--f-d);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.card .tm small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.meta{color:var(--muted);font-size:13.5px;display:flex;flex-wrap:wrap;gap:2px 10px}
+.meta b{color:var(--ink);font-weight:600}
+.vs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600;font-size:17px;margin:2px 0}
+.team{display:inline-flex;align-items:center;gap:6px}
+.team.win{color:var(--ok)}
+.team.lose{color:var(--muted);font-weight:500}
+.team.tbd{color:var(--muted);font-weight:500;font-size:15px}
+.sco{font-family:var(--f-d);font-variant-numeric:tabular-nums;background:var(--soft);padding:1px 10px;border-radius:6px;font-size:18px}
+.badge{font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.badge.done{background:var(--ok-bg);color:var(--ok)}
+.badge.now{background:var(--warn-bg);color:var(--warn)}
+.rd{font-weight:600;color:var(--ink)}
+.rd.f{color:var(--gold)}
+.side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.card.static{background:transparent;border-style:dashed}
+.card.s-now{border-left-color:var(--warn)}.card.s-done{border-left-color:var(--ok)}
+.team.pill{padding:2px 10px 2px 6px;border-radius:999px;background:color-mix(in srgb,var(--cc) 14%,transparent)}
+.bars{display:grid;gap:8px;margin:4px 0 14px}
+.bars .r{display:grid;grid-template-columns:90px minmax(0,1fr) 44px;gap:10px;align-items:center;font-weight:600}
+.bars .t{height:22px;border-radius:6px;background:var(--soft);overflow:hidden}
+.bars .t i{display:block;height:100%;background:var(--cc);border-radius:6px;min-width:4px}
+@media (prefers-reduced-motion:no-preference){.bars .t i{transition:width .6s ease}}
+.bars b{font-family:var(--f-d);font-size:18px;text-align:right}
+.card.ath .lanes{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:14px;color:var(--muted);margin-top:2px}
+.card.ath .lanes span{display:inline-flex;gap:4px;align-items:center}
+.rank{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px;font-weight:600}
+.rank span{display:inline-flex;gap:5px;align-items:center}
+.rank i{font-style:normal;font-family:var(--f-d);width:22px;height:22px;border-radius:50%;background:var(--soft);display:inline-grid;place-items:center;font-size:13px}
+.rank i.p1{background:var(--gold);color:#fff}
+h2{font-family:var(--f-d);font-size:20px;margin:6px 0 10px;font-weight:600}
+h3{font-family:var(--f-d);font-size:16px;margin:18px 0 8px;font-weight:600}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th,td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th{font-size:13px;color:var(--muted);font-weight:600;background:var(--soft)}
+td:first-child,th:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+.big td{font-size:18px}
+.big td.pts{font-family:var(--f-d);font-weight:700;font-size:22px}
+.note{color:var(--muted);font-size:14px;margin:8px 0}
+.empty{text-align:center;color:var(--muted);padding:28px 10px;border:1px dashed var(--line);border-radius:10px}
+.evrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:9px 12px;border-bottom:1px solid var(--line);align-items:center}
+.evrow:last-child{border-bottom:0}
+.evrow .nm{font-weight:600}
+.evrow .nm small{color:var(--muted);font-weight:400;margin-left:6px}
+.form{display:grid;gap:12px;max-width:440px}
+label{display:grid;gap:4px;font-weight:600;font-size:14.5px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
+input[type=number]{font-variant-numeric:tabular-nums}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.ov{position:fixed;inset:0;background:rgba(5,10,18,.6);z-index:50;display:flex;align-items:flex-end;justify-content:center;padding-top:env(safe-area-inset-top,0px)}
+.modal{background:var(--surface);width:min(520px,100%);border-radius:16px 16px 0 0;padding:18px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));max-height:92vh;overflow:auto}
+@media (min-width:640px){.ov{align-items:center}.modal{border-radius:16px}}
+.modal h2{margin:0 0 4px}
+.row2{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center}
+.row2 .team{font-size:18px;font-weight:600}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.err{color:var(--err);font-size:14px;min-height:20px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;z-index:60;font-weight:600;max-width:90vw}
+.me{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+footer{color:var(--muted);font-size:13px;padding-block:6px 30px}
+@media (max-width:520px){.card{grid-template-columns:54px minmax(0,1fr)}.side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start}}
+@media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}.card:hover{border-color:var(--muted)}}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.chips.scroll::-webkit-scrollbar{display:none}
+.chips.scroll .chip{flex:none}
+.btn[disabled]{opacity:.55;cursor:progress}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.live{border:1px solid var(--warn);background:var(--warn-bg);border-radius:10px;padding:10px 12px;margin-bottom:14px}
+.live h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.live .pulse{width:10px;height:10px;border-radius:50%;background:var(--err);display:inline-block}
+@media (prefers-reduced-motion:no-preference){.live .pulse{animation:pl 1.4s infinite}@keyframes pl{50%{opacity:.25}}}
+.live ul{margin:0;padding-left:18px}.live li{margin:2px 0}
+.stick{position:sticky;bottom:0;background:var(--bg);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);z-index:4;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.att-row{display:flex;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-weight:500;cursor:pointer}
+.att-row input{width:24px;height:24px;flex:none;accent-color:var(--ok)}
+.att-row.off span{color:var(--muted)}
+.ovw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.ovw div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--cc);border-radius:8px;padding:6px 8px;font-size:13px;color:var(--muted)}
+.ovw b{display:block;font-size:16px;color:var(--ink);font-family:var(--f-d)}
+.evrow.click{cursor:pointer}.evrow.click:hover{background:var(--soft)}
+.log{font-size:14px}.log div{padding:6px 0;border-bottom:1px solid var(--line)}.log small{color:var(--muted)}
+.help ol{margin:4px 0;padding-left:20px}.help li{margin:3px 0}
+.sublink{font-size:14px;color:var(--muted);margin:0 0 10px}
+.sublink button{border:0;background:none;color:var(--ink);text-decoration:underline;padding:0;font-weight:600}
+/* ===== big-screen dashboard ===== */
+#dash{position:fixed;inset:0;z-index:40;background:radial-gradient(1200px 600px at 10% -10%,#1d2a44,transparent),#070b12;color:#eef3fa;overflow:auto;font-family:var(--f-b);padding:clamp(12px,2vw,28px);display:none}
+#dash.on{display:block}
+.dz-top{display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap;margin-bottom:clamp(10px,1.6vw,22px)}
+.dz-top h1{font-family:var(--f-d);font-size:clamp(22px,2.6vw,44px);margin:0;line-height:1.1}
+.dz-top .sub{color:#93a3bb;font-size:clamp(13px,1.1vw,18px)}
+.dz-clock{font-family:var(--f-d);font-size:clamp(26px,3.4vw,58px);font-weight:600;font-variant-numeric:tabular-nums;line-height:1;text-align:right}
+.dz-clock small{display:block;font-size:clamp(12px,1vw,17px);color:#93a3bb;font-weight:500;margin-top:4px}
+.dz-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(10px,1.4vw,22px)}
+@media (max-width:860px){.dz-grid{grid-template-columns:1fr}}
+.dz-box{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:clamp(12px,1.4vw,22px)}
+.dz-box h2{font-family:var(--f-d);font-size:clamp(15px,1.3vw,22px);margin:0 0 10px;color:#c9d4e4;font-weight:600;display:flex;gap:8px;align-items:center}
+.dz-teams{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1vw,16px)}
+@media (max-width:560px){.dz-teams{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dz-t{border-radius:16px;padding:clamp(10px,1.2vw,20px);background:linear-gradient(170deg,color-mix(in srgb,var(--cc) 55%,#0b1220),color-mix(in srgb,var(--cc) 14%,#0b1220));border:1px solid color-mix(in srgb,var(--cc) 60%,transparent);position:relative;overflow:hidden}
+.dz-t .rk{font-family:var(--f-d);font-size:clamp(13px,1.1vw,18px);font-weight:700;opacity:.9}
+.dz-t .nm{font-family:var(--f-d);font-size:clamp(18px,1.9vw,32px);font-weight:600;margin:2px 0}
+.dz-t .pt{font-family:var(--f-d);font-size:clamp(44px,6.5vw,112px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.dz-t .md{display:flex;gap:10px;margin-top:8px;font-size:clamp(12px,1vw,17px);opacity:.92;flex-wrap:wrap}
+.dz-t.lead{box-shadow:0 0 0 3px #ffd470 inset}
+.dz-t.lead .rk::before{content:"★ "}
+.dz-list{display:grid;gap:8px}
+.dz-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);font-size:clamp(14px,1.15vw,20px)}
+.dz-row .tm{font-family:var(--f-d);font-weight:600;font-variant-numeric:tabular-nums;color:#ffd470}
+.dz-row .sp{font-weight:600}.dz-row .sp small{display:block;color:#93a3bb;font-weight:400;font-size:.8em}
+.dz-row .vs{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end;font-weight:600}
+.dz-dot{width:.8em;height:.8em;border-radius:50%;background:var(--cc);display:inline-block}
+.dz-row .w{color:#7ee2a8}
+@media (max-width:600px){.dz-row{grid-template-columns:auto minmax(0,1fr)}.dz-row .vs{grid-column:1/-1;justify-content:flex-start}}
+.dz-empty{color:#93a3bb;padding:12px}
+.dz-note{margin-top:clamp(10px,1.4vw,22px);background:#ffd470;color:#2a1e00;border-radius:12px;padding:10px 16px;font-weight:700;font-size:clamp(15px,1.4vw,24px)}
+.dz-foot{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:14px;color:#93a3bb;font-size:13px;flex-wrap:wrap}
+.dz-foot button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:8px 14px;font-weight:600}
+.dz-bar{height:8px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:8px}.dz-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c-เขียว),var(--c-ชมพู),var(--c-น้ำเงิน),var(--c-แดง))}
+@media (prefers-reduced-motion:no-preference){.dz-t .pt{transition:transform .3s}.dz-row{animation:dzin .4s ease both}@keyframes dzin{from{opacity:0;transform:translateY(6px)}}}
+
+/* ===== identity: indigo + cassia gold, Kanit italic, slanted team ribbons ===== */
+:root{--indigo:#1a1f5e;--indigo-2:#272e86;--cassia:#f4b400;--cassia-ink:#3b2a00;--gold:#b88400;--m1:#d9a400;--m2:#9aa6b6;--m3:#c0773a;
+  --bg:#f3f4f9;--surface:#fff;--ink:#141733;--muted:#5b6180;--line:#dcdfeb;--soft:#eceef6;--head:#1a1f5e;
+  --f-d:'Kanit','Noto Sans Thai',system-ui,sans-serif;--f-b:'Noto Sans Thai','Kanit',system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e1030;--surface:#171a45;--ink:#eef0fb;--muted:#a3a9cc;--line:#2c3166;--soft:#20245a;--head:#0b0d2a;--indigo:#0b0d2a;--indigo-2:#1a1f5e;--gold:#f4b400}}
+:root[data-theme="dark"]{--bg:#0e1030;--surface:#171a45;--ink:#eef0fb;--muted:#a3a9cc;--line:#2c3166;--soft:#20245a;--head:#0b0d2a;--indigo:#0b0d2a;--indigo-2:#1a1f5e;--gold:#f4b400}
+body{font-family:var(--f-b)}
+header.mast{position:relative;overflow:hidden;padding:0;background:
+  linear-gradient(115deg,transparent 0 62%,rgba(244,180,0,.10) 62% 70%,transparent 70%),
+  linear-gradient(160deg,var(--indigo-2),var(--indigo) 60%)}
+.hero{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.cassia{position:absolute;right:-20px;top:-14px;height:240px;width:auto;color:var(--cassia);opacity:.9;pointer-events:none}
+.brand{position:relative;min-width:0}
+.school{margin:0 0 4px;color:#c8cdf2;font-size:14px;font-weight:500}
+.mast h1{font-family:var(--f-d);font-style:italic;font-weight:800;margin:0;line-height:.98;letter-spacing:-.5px;text-wrap:balance}
+.mast h1 .l1{display:block;font-size:clamp(34px,8.2vw,68px);color:#fff}
+.mast h1 .l2{display:inline-block;margin-top:6px;font-size:clamp(18px,3.6vw,28px);font-weight:700;color:var(--cassia-ink);background:var(--cassia);padding:0 14px 2px 10px;transform:skewX(-12deg);border-radius:3px}
+.dates{margin:10px 0 0;color:#e4e7fb;font-family:var(--f-d);font-weight:500;font-size:clamp(15px,2.2vw,18px)}
+.herox{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.count{font-family:var(--f-d);color:#fff;text-align:right;line-height:1}
+.count b{font-size:clamp(34px,6vw,56px);font-style:italic;font-weight:800;color:var(--cassia)}
+.count span{display:block;font-size:14px;color:#c8cdf2;margin-top:4px;font-weight:500}
+.dashbtn{background:var(--cassia);color:var(--cassia-ink);border:0;border-radius:6px;font-family:var(--f-d);font-weight:600;padding:9px 16px;transform:skewX(-10deg)}
+.dashbtn:hover{background:#ffc72c}
+.mast .top,.mast .emb{display:none}
+/* team ribbons */
+.ribbons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;max-width:none}
+.ribbons .sc{position:relative;border:0;padding:12px 10px 12px 18px;text-align:left;color:#fff;background:var(--cc);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);margin-right:-12px}
+.ribbons .sc:last-child{margin-right:0;clip-path:polygon(14px 0,100% 0,100% 100%,0 100%)}
+.ribbons .sc:first-child{clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);padding-left:max(16px,env(safe-area-inset-left,0px))}
+.ribbons .nm{font-family:var(--f-d);font-weight:600;font-size:15px;display:flex;gap:6px;align-items:baseline}
+.ribbons .rk{position:static;background:rgba(0,0,0,.22);color:#fff;font-size:12px;border-radius:4px;padding:0 6px;line-height:18px;font-weight:700}
+.ribbons .sc.lead .rk{background:var(--cassia);color:var(--cassia-ink)}
+.ribbons .sc b{display:block;font-family:var(--f-d);font-style:italic;font-weight:800;font-size:clamp(30px,6vw,46px);line-height:1;margin:2px 0 4px;color:#fff}
+.ribbons .md{display:flex;gap:8px;font-size:13px;font-weight:600;flex-wrap:wrap}
+.ribbons .md i,.medal{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:3px;vertical-align:-1px;box-shadow:0 0 0 1.5px rgba(255,255,255,.75)}
+.mg{background:var(--m1)}.ms{background:var(--m2)}.mb{background:var(--m3)}
+@media (min-width:761px){.cassia{right:200px}}
+@media (max-width:560px){.rkw{display:none}.ribbons .nm{white-space:nowrap}.ribbons .md{display:none}.ribbons .sc{padding:10px 6px 10px 16px}.ribbons .nm{font-size:13px}.cassia{height:170px;opacity:.55}.herox{flex-direction:row;align-items:center;width:100%;justify-content:space-between}.count{text-align:left}}
+.prog{margin:0;padding:10px 0 12px;color:#c8cdf2}
+.prog .bar{background:rgba(255,255,255,.14)}
+.prog .bar i{background:var(--cassia)}
+/* nav */
+nav.tabs{background:var(--surface);box-shadow:0 1px 0 var(--line)}
+.tab{font-family:var(--f-d);font-weight:600;font-size:15.5px;padding:14px 14px 11px;border-bottom-width:4px}
+.tab[aria-selected="true"]{color:var(--indigo-2);border-bottom-color:var(--cassia)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#fff}}
+/* headings & chips */
+h2{font-family:var(--f-d);font-style:italic;font-weight:700;font-size:24px;letter-spacing:-.2px}
+h3{font-family:var(--f-d);font-weight:600}
+.chip{font-family:var(--f-d);font-weight:500;border-radius:6px}
+.chip[aria-pressed="true"]{background:var(--indigo-2);border-color:var(--indigo-2);color:#fff}
+.dayrow .chip{font-weight:600;font-style:italic}
+.btn{font-family:var(--f-d);font-weight:600;border-radius:6px}
+.btn.pri{background:var(--indigo-2);border-color:var(--indigo-2);color:#fff}
+.btn.ok{background:#178a52;border-color:#178a52}
+/* fixtures */
+.tb-h{font-family:var(--f-d);font-style:italic;font-size:17px;color:var(--ink)}
+.tb-h::after{background:linear-gradient(90deg,var(--cassia),transparent 60%);height:2px}
+.card{border-radius:8px;box-shadow:none;grid-template-columns:72px minmax(0,1fr) auto}
+.card .tm{font-style:italic;font-size:19px;color:var(--indigo-2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card .tm{color:var(--cassia)}}
+.card .tm .pic{display:block;margin-top:6px;width:30px;height:30px;color:var(--muted)}
+.pic svg{width:100%;height:100%}
+.sp-ic{display:inline-flex;width:20px;height:20px;vertical-align:-4px;margin-right:4px;color:currentColor}
+.sco{font-style:italic;font-weight:700;background:var(--indigo-2);color:#fff;border-radius:4px}
+.badge{border-radius:4px;font-family:var(--f-d);font-weight:500}
+.rd.f{color:var(--gold)}
+@media (max-width:520px){.card{grid-template-columns:58px minmax(0,1fr)}}
+/* medal table */
+.big th{font-family:var(--f-d)}
+.big td.pts{font-style:italic;color:var(--indigo-2)}
+.mh{display:inline-flex;align-items:center;gap:4px}
+.bars .t i{border-radius:3px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.bars b{font-style:italic}
+.rank i.p1{background:var(--m1);color:#2a1e00}
+/* dashboard on indigo */
+#dash{background:linear-gradient(115deg,transparent 0 70%,rgba(244,180,0,.07) 70% 78%,transparent 78%),radial-gradient(1100px 600px at 0 0,#2a3196,transparent),#12154a}
+.dz-top h1{font-style:italic;font-weight:800}
+.dz-t{clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);border-radius:6px}
+.dz-t .pt{font-style:italic;font-weight:800}
+.dz-t.lead{box-shadow:inset 0 -6px 0 #f4b400}
+.dz-row .tm{color:#f4b400;font-style:italic}
+
+.brandrow{position:relative;display:flex;align-items:center;gap:clamp(12px,2.4vw,24px);min-width:0}
+.crest{height:clamp(84px,14vw,132px);width:auto;flex:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+.dz-crest{height:clamp(56px,6vw,96px);width:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.dz-brand{display:flex;align-items:center;gap:clamp(10px,1.4vw,20px)}
+@media (max-width:420px){.crest{height:72px}}
+.sco.live{background:#c0392b}
+.brlinks{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}.brlinks>span{font-family:var(--f-d);font-weight:600;margin-right:4px}
+.evov h2{display:flex;align-items:center;gap:6px}
+.brk{margin:6px 0 4px}
+.br{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);align-items:center}
+.br-s{display:grid;gap:14px}
+.br-j{position:relative;align-self:stretch}
+.br-j i:first-child{position:absolute;left:0;right:50%;top:25%;bottom:25%;border:2px solid var(--line);border-left:0;border-radius:0 6px 6px 0}
+.br-j i:last-child{position:absolute;left:50%;right:0;top:50%;border-top:2px solid var(--line)}
+.br-lbl{font-family:var(--f-d);font-weight:600;font-size:13px;color:var(--muted);margin:0 0 4px}
+.bx{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;color:inherit}
+button.bx:hover{border-color:var(--indigo-2)}
+.bx.fin{border:2px solid var(--m1)}
+.bx.lv{border-color:#c0392b}
+.bh{display:flex;justify-content:space-between;gap:6px;font-size:11.5px;color:var(--muted);margin-bottom:2px}
+.bt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px;align-items:center;padding:3px 0;font-weight:500}
+.bt .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14.5px}
+.bt b{font-family:var(--f-d);font-style:italic;min-width:20px;text-align:right}
+.bt.w{font-weight:700;color:var(--ok)}.bt.l{color:var(--muted)}
+.br-t{margin-top:16px;max-width:calc(50% - 13px);margin-left:auto}
+.champ{margin-top:8px;font-family:var(--f-d);font-weight:700;font-style:italic;color:var(--gold);display:flex;align-items:center;gap:6px}
+.podium{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-weight:600}
+.medal.m4{background:var(--line)}
+@media (max-width:520px){.br{grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr)}.bh span:last-child{display:none}.br-t{max-width:none}}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.fcard.cur{border:2px solid var(--cassia);box-shadow:0 4px 18px rgba(26,31,94,.12)}
+.fcard.done{opacity:.85}
+.fh{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.fh .ft{font-family:var(--f-d);font-style:italic;font-weight:700;font-size:20px;color:var(--indigo-2)}
+.fh>span:nth-child(2){flex:1;font-weight:600}.fh small{display:block;color:var(--muted);font-weight:500}
+.fsc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fteam{border-radius:10px;padding:10px;text-align:center;background:color-mix(in srgb,var(--cc) 12%,var(--surface));border:2px solid var(--cc)}
+.fn{font-family:var(--f-d);font-weight:700;font-size:18px}
+.fv{font-family:var(--f-d);font-style:italic;font-weight:800;font-size:64px;line-height:1.05;font-variant-numeric:tabular-nums}
+.fb{display:grid;grid-template-columns:1fr 1.6fr;gap:8px}
+.fbtn{border:0;border-radius:10px;font-family:var(--f-d);font-weight:700;font-size:30px;line-height:1;padding:14px 0;touch-action:manipulation}
+.fbtn.plus{background:var(--cc);color:#fff}.fbtn.minus{background:var(--soft);color:var(--ink)}
+.fdone{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-weight:600}.fdone .w{color:var(--ok)}
+.scorer .rule{margin:0 0 6px;font-size:12.5px}
+.setinfo{font-family:var(--f-d);font-weight:600;margin-bottom:8px;color:var(--indigo-2)}
+.setw{display:inline-block;margin-left:8px;font-size:13px;background:var(--soft);border-radius:4px;padding:0 6px;color:var(--ink);font-weight:600}
+.fb.b3{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.fb.b3 .fbtn{font-size:20px;padding:12px 0}
+.fsc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}.fteam{min-width:0;padding:10px 8px}
+.fbtn[disabled]{opacity:.35}
+.fbtn.sm{font-size:20px;padding:10px 0}
+.endbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.fouls{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px;font-size:13px;font-weight:600}
+.fouls small{flex-basis:100%;color:var(--err)}
+.fouls.hot>span{color:var(--err)}
+.setlist{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0 0 10px;font-size:14px;color:var(--muted)}
+.setlist b{color:var(--ink)}.setlist b.w0,.setlist b.w1{color:var(--ok)}
+.livetxt{color:#c0392b;font-weight:600}
+.rulebox{border-top:1px solid var(--line);padding:8px 0}
+.rulebox summary{cursor:pointer;font-family:var(--f-d);font-weight:600;display:flex;gap:6px;align-items:center}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:6px 0}
+@media print{nav.tabs,.tools,.chips,.btn,.sublink,.stick,footer{display:none!important}body{background:#fff;color:#000}.card{break-inside:avoid}}
+</style>
+
+<header class="mast">
+  <div class="wrap hero">
+    <svg class="cassia" viewBox="0 0 120 220" aria-hidden="true"><path d="M60 0 C58 40 64 80 58 120 C54 150 60 180 57 215" stroke="currentColor" stroke-width="2" fill="none" opacity=".55"/><g fill="currentColor"><circle cx="67.2" cy="8.2" r="4.4"/><circle cx="72.7" cy="12.2" r="4.4"/><circle cx="70.6" cy="18.7" r="4.4"/><circle cx="63.8" cy="18.7" r="4.4"/><circle cx="61.7" cy="12.2" r="4.4"/><circle cx="47.6" cy="22.0" r="4.2"/><circle cx="52.8" cy="25.8" r="4.2"/><circle cx="50.8" cy="31.9" r="4.2"/><circle cx="44.4" cy="31.9" r="4.2"/><circle cx="42.4" cy="25.8" r="4.2"/><circle cx="72.8" cy="35.8" r="4.0"/><circle cx="77.8" cy="39.4" r="4.0"/><circle cx="75.9" cy="45.2" r="4.0"/><circle cx="69.7" cy="45.2" r="4.0"/><circle cx="67.8" cy="39.4" r="4.0"/><circle cx="52.1" cy="49.5" r="3.8"/><circle cx="56.8" cy="53.0" r="3.8"/><circle cx="55.0" cy="58.5" r="3.8"/><circle cx="49.2" cy="58.5" r="3.8"/><circle cx="47.4" cy="53.0" r="3.8"/><circle cx="73.6" cy="63.3" r="3.6"/><circle cx="78.0" cy="66.6" r="3.6"/><circle cx="76.3" cy="71.8" r="3.6"/><circle cx="70.9" cy="71.8" r="3.6"/><circle cx="69.2" cy="66.6" r="3.6"/><circle cx="46.0" cy="77.1" r="3.4"/><circle cx="50.2" cy="80.1" r="3.4"/><circle cx="48.6" cy="85.1" r="3.4"/><circle cx="43.4" cy="85.1" r="3.4"/><circle cx="41.8" cy="80.1" r="3.4"/><circle cx="68.6" cy="90.9" r="3.1"/><circle cx="72.6" cy="93.7" r="3.1"/><circle cx="71.1" cy="98.3" r="3.1"/><circle cx="66.2" cy="98.3" r="3.1"/><circle cx="64.7" cy="93.7" r="3.1"/><circle cx="45.2" cy="104.7" r="2.9"/><circle cx="48.9" cy="107.3" r="2.9"/><circle cx="47.5" cy="111.6" r="2.9"/><circle cx="42.9" cy="111.6" r="2.9"/><circle cx="41.5" cy="107.3" r="2.9"/><circle cx="75.2" cy="118.4" r="2.7"/><circle cx="78.6" cy="120.9" r="2.7"/><circle cx="77.3" cy="124.9" r="2.7"/><circle cx="73.1" cy="124.9" r="2.7"/><circle cx="71.8" cy="120.9" r="2.7"/><circle cx="50.6" cy="132.2" r="2.5"/><circle cx="53.8" cy="134.5" r="2.5"/><circle cx="52.6" cy="138.2" r="2.5"/><circle cx="48.7" cy="138.2" r="2.5"/><circle cx="47.5" cy="134.5" r="2.5"/><circle cx="76.0" cy="146.0" r="2.3"/><circle cx="78.9" cy="148.1" r="2.3"/><circle cx="77.8" cy="151.4" r="2.3"/><circle cx="74.2" cy="151.4" r="2.3"/><circle cx="73.1" cy="148.1" r="2.3"/><circle cx="43.6" cy="159.8" r="2.1"/><circle cx="46.2" cy="161.7" r="2.1"/><circle cx="45.2" cy="164.7" r="2.1"/><circle cx="42.0" cy="164.7" r="2.1"/><circle cx="41.0" cy="161.7" r="2.1"/><circle cx="70.1" cy="173.5" r="1.9"/><circle cx="72.4" cy="175.2" r="1.9"/><circle cx="71.5" cy="178.0" r="1.9"/><circle cx="68.6" cy="178.0" r="1.9"/><circle cx="67.7" cy="175.2" r="1.9"/><circle cx="42.8" cy="187.3" r="1.7"/><circle cx="44.9" cy="188.8" r="1.7"/><circle cx="44.1" cy="191.3" r="1.7"/><circle cx="41.5" cy="191.3" r="1.7"/><circle cx="40.7" cy="188.8" r="1.7"/><circle cx="77.6" cy="201.1" r="1.5"/><circle cx="79.4" cy="202.4" r="1.5"/><circle cx="78.7" cy="204.6" r="1.5"/><circle cx="76.5" cy="204.6" r="1.5"/><circle cx="75.8" cy="202.4" r="1.5"/></g></svg>
+    <div class="brandrow"><img class="crest" src="data:image/webp;base64,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" alt="ตราโรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร" width="186" height="260">
+    <div class="brand">
+      <p class="school">โรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร</p>
+      <h1><span class="l1">ช่อชัยพฤกษ์เกมส์</span><span class="l2">ครั้งที่ 37</span></h1>
+      <p class="dates">11–12 และ 18–19 พฤศจิกายน 2569</p>
+    </div></div>
+    <div class="herox"><div id="count" class="count" aria-live="polite"></div><button class="dashbtn" id="dashbtn" type="button">เปิดจอแสดงผล</button></div>
+  </div>
+  <div class="ribbons" id="score" aria-label="ตารางเหรียญและคะแนนรวม"></div>
+  <div class="wrap"><div class="prog" id="prog"></div></div>
+</header>
+<nav class="tabs" aria-label="เมนู"><div class="wrap" id="tabs" role="tablist"></div></nav>
+<main class="wrap" id="main"></main>
+<div class="wrap"><footer id="foot"></footer></div>
+<div id="layer"></div>
+<div id="dash" role="region" aria-label="จอแสดงผลคะแนนสด"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script type="application/json" id="data">{"M":[{"k":"m4-4","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":960,"e":990,"st":"S","c":"หญิง (รวม)","cols":["น้ำเงิน","เขียว"],"pre":[],"n":4},{"k":"m4-3","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":930,"e":960,"st":"S","c":"หญิง (รวม)","cols":["ชมพู","แดง"],"pre":[],"n":3},{"k":"m4-1","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":870,"e":900,"st":"S","c":"ชาย ม.ต้น","cols":["เขียว","แดง"],"pre":[],"n":1},{"k":"m4-2","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":900,"e":930,"st":"S","c":"ชาย ม.ต้น","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":2},{"k":"m4-5","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":990,"e":1020,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":5},{"k":"m4-6","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":11,"s":1020,"e":1050,"st":"S","c":"ชาย ม.ปลาย","cols":["เขียว","แดง"],"pre":[],"n":6},{"k":"m6-5","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":990,"e":1020,"st":"S","c":"ชาย ม.ปลาย","cols":["เขียว","แดง"],"pre":[],"n":5},{"k":"m6-6","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":1020,"e":1050,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":6},{"k":"m6-3","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":930,"e":960,"st":"S","c":"หญิง (รวม)","cols":["น้ำเงิน","เขียว"],"pre":[],"n":3},{"k":"m6-4","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":960,"e":990,"st":"S","c":"หญิง (รวม)","cols":["แดง","ชมพู"],"pre":[],"n":4},{"k":"m6-1","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":870,"e":900,"st":"S","c":"ชาย ม.ต้น","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":1},{"k":"m6-2","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":11,"s":900,"e":930,"st":"S","c":"ชาย ม.ต้น","cols":["เขียว","แดง"],"pre":[],"n":2},{"k":"m10-1","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":870,"e":900,"st":"S","c":"หญิง ม.ต้น","cols":["ชมพู","เขียว"],"pre":[],"n":1},{"k":"m10-2","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":900,"e":930,"st":"S","c":"หญิง ม.ต้น","cols":["แดง","น้ำเงิน"],"pre":[],"n":2},{"k":"m10-3","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":930,"e":960,"st":"S","c":"ชาย ม.ต้น","cols":["แดง","เขียว"],"pre":[],"n":3},{"k":"m10-4","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":960,"e":990,"st":"S","c":"ชาย ม.ต้น","cols":["น้ำเงิน","ชมพู"],"pre":[],"n":4},{"k":"m10-6","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":1020,"e":1050,"st":"S","c":"คู่ผสม ม.ต้น","cols":["เขียว","ชมพู"],"pre":[],"n":6},{"k":"m10-5","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":11,"s":990,"e":1020,"st":"S","c":"คู่ผสม ม.ต้น","cols":["น้ำเงิน","แดง"],"pre":[],"n":5},{"k":"m11-6","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":1020,"e":1050,"st":"S","c":"หญิง ม.ปลาย","cols":["เขียว","แดง"],"pre":[],"n":6},{"k":"m11-5","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":990,"e":1020,"st":"S","c":"หญิง ม.ปลาย","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":5},{"k":"m11-3","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":930,"e":960,"st":"S","c":"ชาย ม.ปลาย","cols":["แดง","เขียว"],"pre":[],"n":3},{"k":"m11-4","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":960,"e":990,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","น้ำเงิน"],"pre":[],"n":4},{"k":"m11-2","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":900,"e":930,"st":"S","c":"คู่ผสม ม.ปลาย","cols":["เขียว","น้ำเงิน"],"pre":[],"n":2},{"k":"m11-1","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":11,"s":870,"e":900,"st":"S","c":"คู่ผสม ม.ปลาย","cols":["ชมพู","แดง"],"pre":[],"n":1},{"k":"m4-7","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":870,"e":900,"st":"T","c":"หญิง (รวม)","cols":[],"pre":[4,3],"n":7},{"k":"m4-8","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":900,"e":930,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[1,2],"n":8},{"k":"m4-9","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":930,"e":960,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[5,6],"n":9},{"k":"m4-12","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":1020,"e":1050,"st":"F","c":"หญิง (รวม)","cols":[],"pre":[4,3],"n":12},{"k":"m4-10","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":960,"e":990,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[1,2],"n":10},{"k":"m4-11","t":4,"sp":"ฟุตซอล","v":"สนามฟุตซอล","d":12,"s":990,"e":1020,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[5,6],"n":11},{"k":"m6-9","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":930,"e":960,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[5,6],"n":9},{"k":"m6-7","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":870,"e":900,"st":"T","c":"หญิง (รวม)","cols":[],"pre":[3,4],"n":7},{"k":"m6-8","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":900,"e":930,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[1,2],"n":8},{"k":"m6-11","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":990,"e":1020,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[5,6],"n":11},{"k":"m6-12","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":1020,"e":1050,"st":"F","c":"หญิง (รวม)","cols":[],"pre":[3,4],"n":12},{"k":"m6-10","t":6,"sp":"บาสเกตบอล","v":"สนามบาส","d":12,"s":960,"e":990,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[1,2],"n":10},{"k":"m10-8","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":900,"e":930,"st":"T","c":"หญิง ม.ต้น","cols":[],"pre":[1,2],"n":8},{"k":"m10-7","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":870,"e":900,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[3,4],"n":7},{"k":"m10-9","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":930,"e":960,"st":"T","c":"คู่ผสม ม.ต้น","cols":[],"pre":[6,5],"n":9},{"k":"m10-10","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":960,"e":990,"st":"F","c":"หญิง ม.ต้น","cols":[],"pre":[1,2],"n":10},{"k":"m10-12","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":1020,"e":1050,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[3,4],"n":12},{"k":"m10-11","t":10,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 1 (ม.ต้น)","d":12,"s":990,"e":1020,"st":"F","c":"คู่ผสม ม.ต้น","cols":[],"pre":[6,5],"n":11},{"k":"m11-9","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":930,"e":960,"st":"T","c":"หญิง ม.ปลาย","cols":[],"pre":[6,5],"n":9},{"k":"m11-7","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":870,"e":900,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[3,4],"n":7},{"k":"m11-8","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":900,"e":930,"st":"T","c":"คู่ผสม ม.ปลาย","cols":[],"pre":[2,1],"n":8},{"k":"m11-11","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":990,"e":1020,"st":"F","c":"หญิง ม.ปลาย","cols":[],"pre":[6,5],"n":11},{"k":"m11-12","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":1020,"e":1050,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[3,4],"n":12},{"k":"m11-10","t":11,"sp":"เทเบิลเทนนิส","v":"ลานข้างห้องนาฏศิลป์ สนาม 2 (ม.ปลาย)","d":12,"s":960,"e":990,"st":"F","c":"คู่ผสม ม.ปลาย","cols":[],"pre":[2,1],"n":10},{"k":"m3-4","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":765,"e":825,"st":"S","c":"หญิง (รวม)","cols":["เขียว","น้ำเงิน"],"pre":[],"n":4},{"k":"m3-2","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":600,"e":660,"st":"S","c":"หญิง (รวม)","cols":["ชมพู","แดง"],"pre":[],"n":2},{"k":"m3-3","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":690,"e":750,"st":"S","c":"ชาย (รวม)","cols":["แดง","ชมพู"],"pre":[],"n":3},{"k":"m3-1","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":540,"e":600,"st":"S","c":"ชาย (รวม)","cols":["เขียว","น้ำเงิน"],"pre":[],"n":1},{"k":"m5-3","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":660,"e":720,"st":"S","c":"ชาย ม.ปลาย","cols":["น้ำเงิน","เขียว"],"pre":[],"n":3},{"k":"m5-2","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":600,"e":660,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","แดง"],"pre":[],"n":2},{"k":"m5-6","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":840,"e":900,"st":"S","c":"หญิง (รวม)","cols":["น้ำเงิน","เขียว"],"pre":[],"n":6},{"k":"m5-5","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":780,"e":840,"st":"S","c":"หญิง (รวม)","cols":["แดง","ชมพู"],"pre":[],"n":5},{"k":"m5-4","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":720,"e":780,"st":"S","c":"ชาย ม.ต้น","cols":["เขียว","น้ำเงิน"],"pre":[],"n":4},{"k":"m5-1","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":540,"e":600,"st":"S","c":"ชาย ม.ต้น","cols":["ชมพู","แดง"],"pre":[],"n":1},{"k":"m7-3","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":615,"e":645,"st":"S","c":"ชาย ม.ต้น","cols":["เขียว","ชมพู"],"pre":[],"n":3},{"k":"m7-4","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":645,"e":675,"st":"S","c":"ชาย ม.ต้น","cols":["น้ำเงิน","แดง"],"pre":[],"n":4},{"k":"m7-7","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":750,"e":780,"st":"S","c":"ชาย ม.ปลาย","cols":["เขียว","น้ำเงิน"],"pre":[],"n":7},{"k":"m7-8","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":780,"e":810,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","แดง"],"pre":[],"n":8},{"k":"m7-1","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":540,"e":570,"st":"S","c":"หญิง (รวม)","cols":["ชมพู","แดง"],"pre":[],"n":1},{"k":"m7-2","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":570,"e":600,"st":"S","c":"หญิง (รวม)","cols":["น้ำเงิน","เขียว"],"pre":[],"n":2},{"k":"m3-6","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":930,"e":990,"st":"T","c":"หญิง (รวม)","cols":[],"pre":[4,2],"n":6},{"k":"m3-5","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":18,"s":825,"e":885,"st":"T","c":"ชาย (รวม)","cols":[],"pre":[3,1],"n":5},{"k":"m5-7","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":900,"e":960,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[3,2],"n":7},{"k":"m5-9","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":1020,"e":1080,"st":"T","c":"หญิง (รวม)","cols":[],"pre":[6,5],"n":9},{"k":"m5-8","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":18,"s":960,"e":1020,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[4,1],"n":8},{"k":"m7-9","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":900,"e":930,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[3,4],"n":9},{"k":"m7-10","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":975,"e":1005,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[7,8],"n":10},{"k":"m7-5","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":675,"e":705,"st":"T","c":"หญิง (รวม)","cols":[],"pre":[1,2],"n":5},{"k":"m7-12","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":1050,"e":1080,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[3,4],"n":12},{"k":"m7-11","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":1020,"e":1050,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[7,8],"n":11},{"k":"m7-6","t":7,"sp":"เซปักตะกร้อ","v":"สนามเซปักตะกร้อ","d":18,"s":720,"e":750,"st":"F","c":"หญิง (รวม)","cols":[],"pre":[1,2],"n":6},{"k":"m3-7","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":19,"s":840,"e":900,"st":"F","c":"หญิง (รวม)","cols":[],"pre":[4,2],"n":7},{"k":"m3-8","t":3,"sp":"ฟุตบอล 11 คน","v":"สนามฟุตบอล","d":19,"s":930,"e":990,"st":"F","c":"ชาย (รวม)","cols":[],"pre":[3,1],"n":8},{"k":"m5-10","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":19,"s":810,"e":870,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[3,2],"n":10},{"k":"m5-12","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":19,"s":930,"e":990,"st":"F","c":"หญิง (รวม)","cols":[],"pre":[6,5],"n":12},{"k":"m5-11","t":5,"sp":"วอลเลย์บอล","v":"โรงยิมวอลเลย์บอล","d":19,"s":870,"e":930,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[4,1],"n":11},{"k":"m8-1","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":540,"e":570,"st":"S","c":"หญิง ม.ต้น","cols":["น้ำเงิน","เขียว"],"pre":[],"n":1},{"k":"m8-4","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":855,"e":885,"st":"S","c":"หญิง ม.ต้น","cols":["ชมพู","แดง"],"pre":[],"n":4},{"k":"m8-3","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":795,"e":825,"st":"S","c":"ชาย ม.ต้น","cols":["เขียว","น้ำเงิน"],"pre":[],"n":3},{"k":"m8-2","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":765,"e":795,"st":"S","c":"ชาย ม.ต้น","cols":["ชมพู","แดง"],"pre":[],"n":2},{"k":"m8-6","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":930,"e":960,"st":"S","c":"คู่ผสม ม.ต้น","cols":["เขียว","น้ำเงิน"],"pre":[],"n":6},{"k":"m8-5","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":900,"e":930,"st":"S","c":"คู่ผสม ม.ต้น","cols":["ชมพู","แดง"],"pre":[],"n":5},{"k":"m9-3","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":660,"e":690,"st":"S","c":"หญิง ม.ปลาย","cols":["เขียว","น้ำเงิน"],"pre":[],"n":3},{"k":"m9-4","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":690,"e":720,"st":"S","c":"หญิง ม.ปลาย","cols":["ชมพู","แดง"],"pre":[],"n":4},{"k":"m9-5","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":795,"e":825,"st":"S","c":"ชาย ม.ปลาย","cols":["เขียว","น้ำเงิน"],"pre":[],"n":5},{"k":"m9-1","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":540,"e":570,"st":"S","c":"ชาย ม.ปลาย","cols":["ชมพู","แดง"],"pre":[],"n":1},{"k":"m9-2","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":615,"e":645,"st":"S","c":"คู่ผสม ม.ปลาย","cols":["น้ำเงิน","เขียว"],"pre":[],"n":2},{"k":"m9-6","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":870,"e":900,"st":"S","c":"คู่ผสม ม.ปลาย","cols":["แดง","ชมพู"],"pre":[],"n":6},{"k":"m8-7","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":960,"e":990,"st":"T","c":"หญิง ม.ต้น","cols":[],"pre":[1,4],"n":7},{"k":"m8-9","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":1020,"e":1050,"st":"T","c":"ชาย ม.ต้น","cols":[],"pre":[3,2],"n":9},{"k":"m8-8","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":18,"s":990,"e":1020,"st":"T","c":"คู่ผสม ม.ต้น","cols":[],"pre":[6,5],"n":8},{"k":"m9-7","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":900,"e":930,"st":"T","c":"หญิง ม.ปลาย","cols":[],"pre":[3,4],"n":7},{"k":"m9-9","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":1050,"e":1080,"st":"T","c":"ชาย ม.ปลาย","cols":[],"pre":[5,1],"n":9},{"k":"m9-8","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":18,"s":990,"e":1020,"st":"T","c":"คู่ผสม ม.ปลาย","cols":[],"pre":[2,6],"n":8},{"k":"m8-12","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":19,"s":900,"e":930,"st":"F","c":"หญิง ม.ต้น","cols":[],"pre":[1,4],"n":12},{"k":"m8-11","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":19,"s":840,"e":870,"st":"F","c":"ชาย ม.ต้น","cols":[],"pre":[3,2],"n":11},{"k":"m8-10","t":8,"sp":"เปตอง","v":"สนามเปตอง 1 (ม.ต้น)","d":19,"s":810,"e":840,"st":"F","c":"คู่ผสม ม.ต้น","cols":[],"pre":[6,5],"n":10},{"k":"m9-10","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":19,"s":810,"e":840,"st":"F","c":"หญิง ม.ปลาย","cols":[],"pre":[3,4],"n":10},{"k":"m9-11","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":19,"s":870,"e":900,"st":"F","c":"ชาย ม.ปลาย","cols":[],"pre":[5,1],"n":11},{"k":"m9-12","t":9,"sp":"เปตอง","v":"สนามเปตอง 2 (ม.ปลาย)","d":19,"s":900,"e":930,"st":"F","c":"คู่ผสม ม.ปลาย","cols":[],"pre":[2,6],"n":12}],"A":[{"k":"a101","no":101,"s":600,"e":605,"ev":"วิ่ง 100 เมตร","g":"หญิง ม.ต้น","lanes":["แดง","เขียว","ชมพู","น้ำเงิน"]},{"k":"a102","no":102,"s":605,"e":610,"ev":"วิ่ง 100 เมตร","g":"ชาย ม.ต้น","lanes":["น้ำเงิน","แดง","เขียว","ชมพู"]},{"k":"a103","no":103,"s":610,"e":615,"ev":"วิ่ง 100 เมตร","g":"หญิง ม.ปลาย","lanes":["ชมพู","น้ำเงิน","แดง","เขียว"]},{"k":"a104","no":104,"s":615,"e":620,"ev":"วิ่ง 100 เมตร","g":"ชาย ม.ปลาย","lanes":["เขียว","ชมพู","น้ำเงิน","แดง"]},{"k":"a105","no":105,"s":620,"e":625,"ev":"วิ่ง 400 เมตร","g":"หญิง ม.ต้น","lanes":["ชมพู","แดง","น้ำเงิน","เขียว"]},{"k":"a106","no":106,"s":625,"e":630,"ev":"วิ่ง 400 เมตร","g":"ชาย ม.ต้น","lanes":["เขียว","ชมพู","แดง","น้ำเงิน"]},{"k":"a107","no":107,"s":630,"e":635,"ev":"วิ่ง 400 เมตร","g":"หญิง ม.ปลาย","lanes":["น้ำเงิน","เขียว","ชมพู","แดง"]},{"k":"a108","no":108,"s":635,"e":640,"ev":"วิ่ง 400 เมตร","g":"ชาย ม.ปลาย","lanes":["แดง","น้ำเงิน","เขียว","ชมพู"]},{"k":"a109","no":109,"s":640,"e":650,"ev":"วิ่ง 1500 เมตร","g":"หญิง ม.ต้น","lanes":null},{"k":"a110","no":110,"s":650,"e":660,"ev":"วิ่ง 1500 เมตร","g":"ชาย ม.ต้น","lanes":null},{"k":"a111","no":111,"s":660,"e":670,"ev":"วิ่ง 1500 เมตร","g":"หญิง ม.ปลาย","lanes":null},{"k":"a112","no":112,"s":670,"e":680,"ev":"วิ่ง 1500 เมตร","g":"ชาย ม.ปลาย","lanes":null},{"k":"a113","no":113,"s":680,"e":685,"ev":"วิ่ง 200 เมตร","g":"หญิง ม.ต้น","lanes":["เขียว","น้ำเงิน","ชมพู","แดง"]},{"k":"a114","no":114,"s":685,"e":690,"ev":"วิ่ง 200 เมตร","g":"ชาย ม.ต้น","lanes":["แดง","เขียว","น้ำเงิน","ชมพู"]},{"k":"a115","no":115,"s":690,"e":695,"ev":"วิ่ง 200 เมตร","g":"หญิง ม.ปลาย","lanes":["ชมพู","แดง","เขียว","น้ำเงิน"]},{"k":"a116","no":116,"s":695,"e":700,"ev":"วิ่ง 200 เมตร","g":"ชาย ม.ปลาย","lanes":["น้ำเงิน","ชมพู","แดง","เขียว"]},{"k":"a117","no":117,"s":700,"e":705,"ev":"วิ่ง 800 เมตร","g":"หญิง ม.ต้น","lanes":["ชมพู","เขียว","แดง","น้ำเงิน"]},{"k":"a118","no":118,"s":705,"e":710,"ev":"วิ่ง 800 เมตร","g":"ชาย ม.ต้น","lanes":["น้ำเงิน","ชมพู","เขียว","แดง"]},{"k":"a119","no":119,"s":710,"e":715,"ev":"วิ่ง 800 เมตร","g":"หญิง ม.ปลาย","lanes":["แดง","น้ำเงิน","ชมพู","เขียว"]},{"k":"a120","no":120,"s":715,"e":720,"ev":"วิ่ง 800 เมตร","g":"ชาย ม.ปลาย","lanes":["เขียว","แดง","น้ำเงิน","ชมพู"]},{"k":"a121","no":121,"s":720,"e":725,"ev":"วิ่งผลัด 4x100 เมตร","g":"หญิง ม.ต้น","lanes":["แดง","น้ำเงิน","เขียว","ชมพู"]},{"k":"a122","no":122,"s":725,"e":730,"ev":"วิ่งผลัด 4x100 เมตร","g":"ชาย ม.ต้น","lanes":["ชมพู","แดง","น้ำเงิน","เขียว"]},{"k":"a123","no":123,"s":730,"e":735,"ev":"วิ่งผลัด 4x100 เมตร","g":"หญิง ม.ปลาย","lanes":["เขียว","ชมพู","แดง","น้ำเงิน"]},{"k":"a124","no":124,"s":735,"e":740,"ev":"วิ่งผลัด 4x100 เมตร","g":"ชาย ม.ปลาย","lanes":["น้ำเงิน","เขียว","ชมพู","แดง"]},{"k":"a125","no":125,"s":740,"e":745,"ev":"วิ่งผลัด 4x400 เมตร","g":"หญิง ม.ต้น","lanes":["น้ำเงิน","ชมพู","แดง","เขียว"]},{"k":"a126","no":126,"s":745,"e":750,"ev":"วิ่งผลัด 4x400 เมตร","g":"ชาย ม.ต้น","lanes":["เขียว","น้ำเงิน","ชมพู","แดง"]},{"k":"a127","no":127,"s":750,"e":755,"ev":"วิ่งผลัด 4x400 เมตร","g":"หญิง ม.ปลาย","lanes":["แดง","เขียว","น้ำเงิน","ชมพู"]},{"k":"a128","no":128,"s":755,"e":760,"ev":"วิ่งผลัด 4x400 เมตร","g":"ชาย ม.ปลาย","lanes":["ชมพู","แดง","เขียว","น้ำเงิน"]}],"X":[{"k":"x1","d":19,"s":510,"e":540,"title":"พิธีเปิดการแข่งขัน","note":"เวลาโดยประมาณ รอยืนยัน"},{"k":"x2","d":19,"s":780,"e":840,"title":"กีฬาไทย","note":"เวลาโดยประมาณ รอยืนยัน"},{"k":"x3","d":19,"s":1005,"e":1035,"title":"พิธีปิดการแข่งขัน","note":"เวลาโดยประมาณ รอยืนยัน"}],"days":[11,12,18,19]}</script>
+<script>
+(function(){
+'use strict';
+const D=JSON.parse(document.getElementById('data').textContent);
+const COLS=['เขียว','ชมพู','น้ำเงิน','แดง'];
+const DEFAULT_HASH='';
+const LOGO=document.querySelector('.crest').src;
+const SALT='chor37:';
+const MATCH={}; D.M.forEach(m=>MATCH[m.k]=m);
+const byTN={}; D.M.forEach(m=>byTN[m.t+'-'+m.n]=m);
+const SPORTS=[...new Set(D.M.map(m=>m.sp))];
+const CODE={'เขียว':'G','ชมพู':'P','น้ำเงิน':'B','แดง':'R'};
+const st={live:{},fDay:null,fVen:null,log:[],lastTs:0,roster:{},checkin:{},myCol:null,attDay:null,attCol:null,q:'',tab:'sched',day:null,sport:'all',col:'all',res:{},cfg:{points:[4,3,2,1]},authHash:DEFAULT_HASH,notice:'',teacher:null,dbOn:false,canWrite:true,isAdmin:false,loaded:false};
+let db=null, auth=null, teacherSubs=[], ckSub=null, ckKey=null;
+
+/* helpers */
+const $=(s,r)=>(r||document).querySelector(s);
+function el(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const k in attrs){const v=attrs[k];if(v==null||(v===false&&!k.startsWith('aria-')))continue;if(k.startsWith('aria-')&&typeof v==='boolean'){e.setAttribute(k,String(v));continue}if(k==='class')e.className=v;else if(k==='style')e.setAttribute('style',v);else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(k==='text')e.textContent=v;else e.setAttribute(k,v===true?'':v)}
+  for(const c of kids.flat()){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+const hm=s=>String(Math.floor(s/60)).padStart(2,'0')+'.'+String(s%60).padStart(2,'0');
+const DOW=['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const dayLabel=d=>{const dt=new Date(2026,10,d);return DOW[dt.getDay()]+' '+d+' พ.ย.'};
+const colDot=c=>el('span',{class:'dot',style:'--cc:var(--c-'+c+')','aria-hidden':'true'});
+
+const ICON={
+ 'ฟุตซอล':'<circle cx="12" cy="12" r="9"/><path d="M12 7l3.8 2.8-1.5 4.4H9.7L8.2 9.8z"/><path d="M12 7V3.2M15.8 9.8l3.6-1.2M14.3 14.2l2.2 3.2M9.7 14.2l-2.2 3.2M8.2 9.8 4.6 8.6"/>',
+ 'บาสเกตบอล':'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3 2.6 3 10.2 0 12.8M18.4 5.6c-3 2.6-3 10.2 0 12.8"/>',
+ 'เทเบิลเทนนิส':'<circle cx="10" cy="10" r="6.5"/><path d="M14.6 14.6 20 20"/><circle cx="19" cy="6" r="2"/>',
+ 'วอลเลย์บอล':'<circle cx="12" cy="12" r="9"/><path d="M12 3c-1 4 0 8 3.5 10.5M20.6 14.6c-3.8-.6-7.6.6-9.8 4.6M4.2 7.6c2.8 2.6 6.4 3.6 9.6 2.2"/>',
+ 'เซปักตะกร้อ':'<circle cx="12" cy="12" r="9"/><path d="M5 8h14M4 13h16M6 17.5h12M8.5 4l-2 16M15.5 4l2 16M12 3v18"/>',
+ 'เปตอง':'<circle cx="8" cy="14" r="5"/><circle cx="17" cy="15" r="4"/><circle cx="16" cy="6" r="1.6"/><path d="M5 12.5c2-1 4-1 6 0"/>',
+ 'กรีฑา':'<path d="M3 20c0-6 4-10 9-10s9 4 9 10"/><path d="M6.5 20c0-3.8 2.4-6.5 5.5-6.5s5.5 2.7 5.5 6.5"/><path d="M10 20c0-1.4.9-2.5 2-2.5s2 1.1 2 2.5"/><circle cx="12" cy="5" r="2"/>'
+};
+ICON['ฟุตบอล 11 คน']=ICON['ฟุตซอล'];
+function sportIcon(sp,cls){const s=el('span',{class:cls||'sp-ic','aria-hidden':'true'});s.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+(ICON[sp]||ICON['กรีฑา'])+'</svg>';return s}
+const colTag=(c,cls)=>el('span',{class:'team '+(cls||'')},colDot(c),'สี'+c);
+function bkkNow(){const n=new Date();const u=n.getTime()+n.getTimezoneOffset()*60000;return new Date(u+7*3600000)}
+function toast(msg){document.querySelectorAll('.toast').forEach(x=>x.remove());const t=el('div',{class:'toast',role:'status'},msg);document.body.append(t);setTimeout(()=>t.remove(),2600)}
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const tstr=ts=>{if(!ts)return '';const d=new Date(ts+(new Date().getTimezoneOffset()+420)*60000);return d.getDate()+' '+['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][d.getMonth()]+' '+String(d.getHours()).padStart(2,'0')+'.'+String(d.getMinutes()).padStart(2,'0')+' น.'};
+async function busy(btn,fn){if(btn.disabled)return;btn.disabled=true;const tx=btn.textContent;btn.textContent='กำลังบันทึก…';try{return await fn()}finally{btn.disabled=false;btn.textContent=tx}}
+function logAct(act,text){if(!db||!st.teacher)return;db.collection('log').add({act,text,by:st.teacher.name,ts:Date.now()}).catch(()=>{})}
+
+/* rules */
+function winnerOf(r){return r&&r.win||null}
+function teams(m){
+  if(m.st==='S')return {t:m.cols.slice(),known:true};
+  const semis=m.pre.map(n=>byTN[m.t+'-'+n]);
+  const out=semis.map((s,i)=>{const r=st.res[s.k];if(!r||!r.win)return null;const o=s.cols.find(c=>c!==r.win);return m.st==='F'?r.win:o});
+  const rr=st.res[m.k];if(rr&&rr.tms&&rr.tms.length===2)return {t:rr.tms,known:true,semis};
+  return {t:out,known:out.every(Boolean),semis};
+}
+function placeholderFor(m,i){const n=m.pre[i];return (m.st==='F'?'ทีมชนะคู่ที่ ':'ทีมแพ้คู่ที่ ')+n}
+function events(){
+  const E={};
+  D.M.forEach(m=>{const k=m.t+'|'+m.c;(E[k]=E[k]||{k,sp:m.sp,c:m.c,ms:[]}).ms.push(m)});
+  return Object.values(E);
+}
+const EVENTS=events();
+function eventPlaces(ev){
+  const p={};
+  const F=ev.ms.find(m=>m.st==='F'),T=ev.ms.find(m=>m.st==='T');
+  [[F,1,2],[T,3,4]].forEach(([m,a,b])=>{const r=st.res[m.k];if(!r||!r.win)return;const tm=teams(m).t;const w=r.win;const l=tm.find(c=>c&&c!==w);p[w]=a;if(l)p[l]=b});
+  return p;
+}
+function standings(){
+  const S={};COLS.forEach(c=>S[c]={c,pts:0,pl:[0,0,0,0],byEv:{}});
+  const pts=st.cfg.points;
+  EVENTS.forEach(ev=>{const pl=eventPlaces(ev);for(const c in pl){S[c].pts+=pts[pl[c]-1];S[c].pl[pl[c]-1]++;S[c].byEv[ev.k]=pl[c]}});
+  D.A.forEach(a=>{const r=st.res[a.k];if(!r||!r.ranks)return;for(const c in r.ranks){const p=r.ranks[c];S[c].pts+=pts[p-1];S[c].pl[p-1]++;S[c].byEv[a.k]=p}});
+  return Object.values(S).sort((x,y)=>y.pts-x.pts||y.pl[0]-x.pl[0]||y.pl[1]-x.pl[1]||y.pl[2]-x.pl[2]);
+}
+
+function progress(){const all=D.M.length+D.A.length;const done=D.M.filter(m=>st.res[m.k]&&st.res[m.k].win).length+D.A.filter(a=>st.res[a.k]&&st.res[a.k].ranks).length;return {all,done}}
+/* render */
+function renderScore(){
+  const s=standings();const top=s[0].pts>0?s[0].pts:-1;
+  const box=$('#score');box.replaceChildren(...COLS.map(c=>{const x=s.find(y=>y.c===c);const rk=s.findIndex(y=>y.c===c)+1;return el('div',{class:'sc'+(x.pts===top?' lead':''),style:'--cc:var(--c-'+c+')'},
+    el('div',{class:'nm'},'สี'+c,top>0?el('span',{class:'rk'},el('span',{class:'rkw'},'อันดับ '),rk):null),el('b',null,x.pts),
+    el('div',{class:'md','aria-label':'ที่ 1 '+x.pl[0]+' ที่ 2 '+x.pl[1]+' ที่ 3 '+x.pl[2]},el('span',null,el('i',{class:'mg'}),x.pl[0]),el('span',null,el('i',{class:'ms'}),x.pl[1]),el('span',null,el('i',{class:'mb'}),x.pl[2])))}));
+  const n=bkkNow();const today=new Date(n.getFullYear(),n.getMonth(),n.getDate());const start=new Date(2026,10,11),end=new Date(2026,10,19);
+  const dd=Math.round((start-today)/86400000);const cb=$('#count');
+  if(dd>0)cb.replaceChildren(el('b',null,dd),el('span',null,'วันก่อนเริ่มแข่ง'));
+  else if(today<=end){const k=D.days.indexOf(n.getDate());cb.replaceChildren(el('b',null,k>=0?'วันที่ '+(k+1):'พัก'),el('span',null,k>=0?'จาก 4 วันแข่ง':'วันถัดไปที่มีแข่ง '+(D.days.find(x=>x>n.getDate())||'')+' พ.ย.'))}
+  else cb.replaceChildren(el('b',null,'จบแล้ว'),el('span',null,'ขอบคุณทุกสี'));
+  const pg=progress();$('#prog').replaceChildren(el('span',null,'แข่งจบแล้ว '+pg.done+' จาก '+pg.all+' รายการ'),el('span',{class:'bar'},el('i',{style:'width:'+(pg.all?pg.done*100/pg.all:0)+'%'})));
+}
+const TABS=[['sched','ตารางแข่ง'],['mine','สีของฉัน'],['stand','คะแนนสี'],['ath','กรีฑา'],['field','กรรมการสนาม'],['att','เช็คการเข้าร่วม'],['staff','ครู / ผู้ดูแล']];
+const TEACHER_TABS=['field','att'];
+function renderTabs(){
+  const box=$('#tabs');box.replaceChildren(...TABS.filter(([k])=>!TEACHER_TABS.includes(k)||st.teacher).map(([k,t])=>el('button',{class:'tab',role:'tab','aria-selected':st.tab===k,onclick:()=>go(()=>{st.tab=k})},t)));
+  const a=box.querySelector('[aria-selected="true"]');if(a&&a.scrollIntoView&&st._lastTab!==st.tab){st._lastTab=st.tab;try{a.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}
+}
+/* navigation guard for unsaved attendance */
+function go(fn){
+  const dr=st.draft;
+  if(!(dr&&dr.dirty)){fn();render();return}
+  const ov=overlay(el('div',null,el('h2',null,'ยังไม่ได้บันทึกการเช็คชื่อ'),
+    el('p',null,'สี'+dr.c+' ม.'+dr.room+' · '+dayLabel(dr.day)+' รอบ'+SESS[dr.sess]+' มีการเปลี่ยนแปลงที่ยังไม่บันทึก'),
+    el('div',{class:'actions'},
+      el('button',{class:'btn pri',onclick:async e=>{if(await busy(e.currentTarget,()=>saveAtt(dr))){ov.remove();fn();render()}}},'บันทึกแล้วไปต่อ'),
+      el('button',{class:'btn danger',onclick:()=>{dr.dirty=false;st.draft=null;ov.remove();fn();render()}},'ไม่บันทึก'),
+      el('button',{class:'btn',onclick:()=>ov.remove()},'กลับไปเช็คต่อ'))));
+}
+function statusOf(item,r){
+  if(r&&(r.win||r.ranks))return ['done','จบแล้ว'];
+  if(item.k&&st.live[item.k])return ['now','สด'];
+  const n=bkkNow();
+  const td=n.getFullYear()===2026&&n.getMonth()===10?n.getDate():(n.getFullYear()>2026||(n.getFullYear()===2026&&n.getMonth()>10)?99:0);const m=n.getHours()*60+n.getMinutes();
+  if(td===item.d&&m>=item.s&&m<item.e)return ['now','กำลังแข่ง'];
+  if(td>item.d||(td===item.d&&m>=item.e))return ['now','รอบันทึกผล'];
+  return ['','รอแข่ง'];
+}
+function canEdit(){return !!st.teacher}
+function matchCard(m){
+  const r=st.res[m.k];const tm=teams(m);const [sc,sl]=statusOf(m,r);
+  const rd=m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ';
+  const vs=el('div',{class:'vs'});
+  [0,1].forEach(i=>{
+    const c=tm.t[i];
+    if(i===1)vs.append(el('span',{class:'note',style:'margin:0'},'VS'));
+    const lv=!r&&st.live[m.k];const sv=r&&r.sa!=null?r:lv||null;
+    if(c){const cls=r&&r.win?(r.win===c?'win':'lose'):'';const t=colTag(c,cls+' pill');t.style.setProperty('--cc','var(--c-'+c+')');vs.append(t);if(sv)vs.append(el('span',{class:'sco'+(lv?' live':'')},i===0?sv.sa:sv.sb))}
+    else vs.append(el('span',{class:'team tbd'},placeholderFor(m,i)));
+  });
+  const meta=el('div',{class:'meta'},el('span',null,m.sp),el('b',null,m.c),el('span',{class:'rd'+(m.st==='F'?' f':'')},rd),el('span',null,m.v));
+  const side=el('div',{class:'side'},el('span',{class:'badge '+sc},sl),
+    canEdit()?el('button',{class:'btn sm',onclick:()=>openMatch(m)},r?'แก้ผล':'กรอกผล'):null,
+    r&&r.win?el('button',{class:'btn sm',onclick:()=>shareMatch(m),'aria-label':'สร้างภาพแชร์ผล '+m.sp+' '+m.c},'ภาพแชร์'):null);
+  return el('div',{class:'card'+(sc==='done'?' s-done':sc==='now'?' s-now':'')},el('div',{class:'tm'},hm(m.s),el('small',null,'ถึง '+hm(m.e)),sportIcon(m.sp,'pic')),el('div',null,vs,meta,!r&&st.live[m.k]&&st.live[m.k].txt?el('div',{class:'meta livetxt'},'สด · '+st.live[m.k].txt):null,r&&r.note?el('div',{class:'meta'},'หมายเหตุ: '+r.note):null),side);
+}
+function athCard(a,showDay){
+  const r=st.res[a.k];const [sc,sl]=statusOf({d:19,s:a.s,e:a.e},r);
+  const lanes=a.lanes?el('div',{class:'lanes'},a.lanes.map((c,i)=>el('span',null,'ช่อง '+(i+1),colDot(c),c))):el('div',{class:'lanes'},'ออกตัวร่วมกัน ไม่แยกช่อง');
+  let rank=null;
+  if(r&&r.ranks){const ord=Object.entries(r.ranks).sort((x,y)=>x[1]-y[1]);rank=el('div',{class:'rank'},ord.map(([c,p])=>el('span',null,el('i',{class:p===1?'p1':''},p),colDot(c),c)))}
+  const side=el('div',{class:'side'},el('span',{class:'badge '+sc},sl),canEdit()?el('button',{class:'btn sm',onclick:()=>openAth(a)},r?'แก้ผล':'กรอกผล'):null);
+  return el('div',{class:'card ath'},el('div',{class:'tm'},hm(a.s),el('small',null,showDay?'19 พ.ย.':'รายการที่ '+a.no),sportIcon('กรีฑา','pic')),
+    el('div',null,el('div',{class:'vs',style:'font-size:17px'},a.ev,el('span',{class:'note',style:'margin:0'},'·'),a.g),lanes,rank,r&&r.note?el('div',{class:'meta'},'หมายเหตุ: '+r.note):null),side);
+}
+function filtered(){
+  let L=D.M.filter(m=>m.d===st.day);
+  if(st.sport!=='all'&&st.sport!=='กรีฑา')L=L.filter(m=>m.sp===st.sport);
+  if(st.col!=='all')L=L.filter(m=>{const t=teams(m);return t.t.includes(st.col)||(!t.known&&m.st!=='S')});
+  return L;
+}
+function liveBox(){
+  const n=bkkNow();if(!(n.getFullYear()===2026&&n.getMonth()===10))return null;const d=n.getDate();if(!D.days.includes(d))return null;
+  const m=n.getHours()*60+n.getMinutes();
+  const items=[...D.M.filter(x=>x.d===d).map(x=>({s:x.s,e:x.e,t:x.sp+' '+x.c+' · '+teams(x).t.map(c=>c?'สี'+c:'รอผล').join(' พบ '),r:st.res[x.k]&&st.res[x.k].win})),
+    ...(d===19?D.A.map(a=>({s:a.s,e:a.e,t:'กรีฑา '+a.ev+' '+a.g,r:st.res[a.k]&&st.res[a.k].ranks})):[])];
+  const now=items.filter(x=>x.s<=m&&m<x.e&&!x.r).sort((a,b)=>a.s-b.s);
+  const next=items.filter(x=>x.s>m).sort((a,b)=>a.s-b.s);const ns=next.length?next[0].s:null;
+  if(!now.length&&ns==null)return null;
+  return el('div',{class:'live',role:'status'},el('h3',null,el('span',{class:'pulse','aria-hidden':'true'}),now.length?'กำลังแข่งตอนนี้':'นัดถัดไป'),
+    el('ul',null,(now.length?now:next.filter(x=>x.s===ns)).slice(0,6).map(x=>el('li',null,hm(x.s)+' '+x.t))),
+    now.length&&ns!=null?el('div',{class:'note',style:'margin:4px 0 0'},'นัดถัดไปเริ่ม '+hm(ns)+' น.'):null);
+}
+function viewSched(){
+  const root=el('div');
+  if(st.notice)root.append(el('div',{class:'banner',role:'status'},st.notice));
+  if(!st.dbOn&&st.loaded)root.append(el('div',{class:'banner'},'เชื่อมต่อฐานข้อมูลผลแข่งไม่ได้ ตารางแสดงได้ตามปกติ แต่ผลคะแนนยังไม่แสดง ตรวจอินเทอร์เน็ตแล้วรีเฟรชหน้า'));
+  if(!st.teacher)root.append(el('p',{class:'sublink'},'ครูผู้รับผิดชอบ: ',el('button',{onclick:()=>{st.tab='staff';render()}},'เข้าสู่ระบบเพื่อกรอกผล')));
+  const lv=liveBox();if(lv)root.append(lv);
+  root.append(el('div',{class:'chips dayrow',role:'group','aria-label':'เลือกวันแข่ง'},D.days.map(d=>el('button',{class:'chip','aria-pressed':st.day===d,onclick:()=>{st.day=d;render()}},dayLabel(d)))));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกชนิดกีฬา'},[['all','ทุกกีฬา'],...SPORTS.map(s=>[s,s]),['กรีฑา','กรีฑา']].map(([k,t])=>el('button',{class:'chip','aria-pressed':st.sport===k,onclick:()=>{st.sport=k;render()}},k!=='all'?sportIcon(k):null,t))));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกสี'},[['all','ทุกสี'],...COLS.map(c=>[c,'สี'+c])].map(([k,t])=>el('button',{class:'chip','aria-pressed':st.col===k,onclick:()=>{st.col=k;render()}},k!=='all'?colDot(k):null,t))));
+  if(st.sport!=='all'&&st.sport!=='กรีฑา'){const evs=EVENTS.filter(e=>e.sp===st.sport);root.append(el('div',{class:'brlinks'},el('span',null,'สายการแข่งขัน'),evs.map(e=>el('button',{class:'btn sm',onclick:()=>openEvent(e)},e.c))))}
+  root.append(el('div',{class:'tools'},el('button',{class:'btn',onclick:copySummary},'คัดลอกสรุปผลของวันนี้')));
+  let items=[];
+  if(st.sport==='all'||st.sport!=='กรีฑา')filtered().forEach(m=>items.push({s:m.s,node:()=>matchCard(m)}));
+  if(st.day===19&&(st.sport==='all'||st.sport==='กรีฑา')&&st.col==='all')D.A.forEach(a=>items.push({s:a.s,node:()=>athCard(a,false)}));
+  if(st.day===19&&st.sport==='all'&&st.col==='all')D.X.forEach(x=>items.push({s:x.s,node:()=>el('div',{class:'card static'},el('div',{class:'tm'},hm(x.s)),el('div',null,el('div',{class:'vs',style:'font-size:17px'},x.title),el('div',{class:'meta'},x.note)),el('span'))}));
+  if(!items.length){root.append(el('div',{class:'empty'},'ไม่มีรายการตามตัวกรองที่เลือก'));return root}
+  items.sort((a,b)=>a.s-b.s);
+  const g=new Map();items.forEach(i=>{const k=Math.floor(i.s/60);if(!g.has(k))g.set(k,[]);g.get(k).push(i)});
+  [...g.entries()].forEach(([h,arr])=>{const b=el('div',{class:'timeblock'},el('div',{class:'tb-h'},String(h).padStart(2,'0')+'.00 น.'));arr.forEach(i=>b.append(i.node()));root.append(b)});
+  return root;
+}
+function viewStand(){
+  const root=el('div');const s=standings();
+  root.append(el('h2',null,'ตารางเหรียญและคะแนนรวม'));
+  const p=st.cfg.points;
+  root.append(el('p',{class:'note'},'อันดับ 1 ได้ '+p[0]+' คะแนน · อันดับ 2 ได้ '+p[1]+' · อันดับ 3 ได้ '+p[2]+' · อันดับ 4 ได้ '+p[3]+' (รอบแพ้คัดออก: ชนะชิงชนะเลิศ = ที่ 1, แพ้ = ที่ 2, ชนะชิงอันดับ 3 = ที่ 3, แพ้ = ที่ 4 · กรีฑาตามลำดับที่เข้าเส้นชัย)'));
+  const tb=el('table',{class:'big'},el('thead',null,el('tr',null,['สี',['mg','ที่ 1'],['ms','ที่ 2'],['mb','ที่ 3'],'ที่ 4','คะแนน'].map(h=>el('th',null,Array.isArray(h)?el('span',{class:'mh'},el('i',{class:'medal '+h[0]}),h[1]):h)))),
+    el('tbody',null,s.map(x=>el('tr',null,el('td',null,colTag(x.c)),...x.pl.map(n=>el('td',null,n)),el('td',{class:'pts'},x.pts)))));
+  const mx=Math.max(1,...s.map(x=>x.pts));
+  root.append(el('div',{class:'bars',role:'img','aria-label':'กราฟคะแนนสี '+s.map(x=>x.c+' '+x.pts).join(', ')},s.map(x=>el('div',{class:'r',style:'--cc:var(--c-'+x.c+')'},el('span',null,colDot(x.c),' สี'+x.c),el('span',{class:'t'},el('i',{style:'width:'+(x.pts*100/mx)+'%'})),el('b',null,x.pts)))));
+  root.append(el('div',{class:'tablewrap'},tb));
+  root.append(el('p',{class:'note'},'เรียงตามคะแนน ถ้าเท่ากันดูจำนวนที่ 1 ที่ 2 และที่ 3 ตามลำดับ · แตะชื่อประเภทกีฬาเพื่อดูสายการแข่งขัน'));
+  root.append(el('div',{class:'tools'},el('button',{class:'btn pri',onclick:shareStandings},'สร้างภาพตารางคะแนน'),el('button',{class:'btn',onclick:openReport},'รายงานสรุปและรายชื่อทำเกียรติบัตร')));
+  root.append(el('h3',null,'ผลแยกตามประเภท'));
+  const box=el('div',{class:'tablewrap'});
+  EVENTS.forEach(ev=>{
+    const pl=eventPlaces(ev);const done=ev.ms.filter(m=>st.res[m.k]&&st.res[m.k].win).length;
+    const ord=Object.entries(pl).sort((a,b)=>a[1]-b[1]);
+    box.append(el('div',{class:'evrow click',role:'button',tabindex:'0',onclick:()=>openEvent(ev),onkeydown:e=>{if(e.key==='Enter')openEvent(ev)}},el('div',{class:'nm'},sportIcon(ev.sp),ev.sp,el('small',null,ev.c)),
+      ord.length?el('div',{class:'rank'},ord.map(([c,q])=>el('span',null,el('i',{class:q===1?'p1':''},q),colDot(c),c))):el('span',{class:'badge'},done+'/4 นัด')));
+  });
+  root.append(box);
+  const ab=el('div',{class:'tablewrap',style:'margin-top:12px'});
+  const doneA=D.A.filter(a=>st.res[a.k]&&st.res[a.k].ranks).length;
+  ab.append(el('div',{class:'evrow'},el('div',{class:'nm'},'กรีฑา',el('small',null,'จบแล้ว '+doneA+' จาก '+D.A.length+' รายการ · ดูรายละเอียดที่แท็บกรีฑา')),el('span')));
+  root.append(ab);
+  return root;
+}
+function bxTeam(m,i,r,lv){
+  const tm=teams(m).t;const c=tm[i];const sv=r&&r.sa!=null?r:(!r&&lv?lv:null);const w=r&&r.win;
+  return el('div',{class:'bt'+(w?(w===c?' w':' l'):'')},c?colDot(c):el('span',{class:'dot'}),el('span',{class:'n'},c?'สี'+c:placeholderFor(m,i)),el('b',null,sv?(i?sv.sb:sv.sa):''));
+}
+function bxMatch(m,label){
+  const r=st.res[m.k],lv=st.live[m.k];
+  const box=el(canEdit()?'button':'div',{class:'bx'+(m.st==='F'?' fin':'')+(lv&&!r?' lv':''),type:canEdit()?'button':null,onclick:canEdit()?()=>openMatch(m):null,'aria-label':canEdit()?'กรอกผล '+label:null},
+    el('div',{class:'bh'},el('span',null,label),el('span',null,dayLabel(m.d)+' '+hm(m.s))),bxTeam(m,0,r,lv),bxTeam(m,1,r,lv));
+  return box;
+}
+function bracket(ev){
+  const S=ev.ms.filter(m=>m.st==='S').sort((a,b)=>a.n-b.n),F=ev.ms.find(m=>m.st==='F'),T=ev.ms.find(m=>m.st==='T');
+  const fr=st.res[F.k];const champ=fr&&fr.win;
+  const pl=eventPlaces(ev);const pod=Object.entries(pl).sort((a,b)=>a[1]-b[1]);
+  return el('div',{class:'brk'},
+    el('div',{class:'br'},
+      el('div',{class:'br-s'},S.map(m=>bxMatch(m,'รอบคัดเลือก คู่ที่ '+m.n))),
+      el('div',{class:'br-j','aria-hidden':'true'},el('i'),el('i')),
+      el('div',{class:'br-f'},el('div',{class:'br-lbl'},'ชิงชนะเลิศ'),bxMatch(F,'คู่ที่ '+F.n),champ?el('div',{class:'champ'},el('i',{class:'medal mg'}),'ชนะเลิศ สี'+champ):null)),
+    el('div',{class:'br-t'},el('div',{class:'br-lbl'},'ชิงอันดับ 3 ผู้แพ้รอบคัดเลือก'),bxMatch(T,'คู่ที่ '+T.n)),
+    pod.length?el('div',{class:'podium'},pod.map(([c,p])=>el('span',null,el('i',{class:'medal '+(['mg','ms','mb','m4'][p-1])}),'ที่ '+p+' สี'+c))):null);
+}
+function openEvent(ev){
+  const host=el('div');const draw=()=>host.replaceChildren(bracket(ev));draw();
+  const ov=overlay(el('div',{class:'evov'},el('h2',null,sportIcon(ev.sp),ev.sp+' '+ev.c),host,el('div',{class:'actions'},el('button',{class:'btn',onclick:()=>{clearInterval(tk);ov.remove()}},'ปิด'))));
+  const tk=setInterval(()=>{if(!ov.isConnected)return clearInterval(tk);draw()},3000);
+}
+/* ===== field mode (กรรมการสนาม) with live scoring ===== */
+const liveTimers={};
+function bump(m,i,d){
+  const cur=Object.assign({sa:0,sb:0},st.live[m.k]||{});const k=i?'sb':'sa';cur[k]=Math.max(0,(cur[k]||0)+d);
+  cur.by=st.teacher.name;cur.ts=Date.now();st.live[m.k]=cur;render();
+  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(st.live[m.k]).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
+}
+function resetLive(m){delete st.live[m.k];render();db.collection('live').doc(m.k).delete().catch(()=>{})}
+function viewField(){
+  const root=el('div');root.append(el('h2',null,'กรรมการสนาม'));
+  const n=bkkNow();const td=n.getMonth()===10&&n.getFullYear()===2026?n.getDate():0;
+  const day=st.fDay||(D.days.includes(td)?td:D.days.find(d=>d>td)||D.days[0]);
+  const vens=[...new Set(D.M.filter(m=>m.d===day).map(m=>m.v))];
+  const ven=vens.includes(st.fVen)?st.fVen:vens[0];
+  root.append(el('div',{class:'chips dayrow',role:'group','aria-label':'เลือกวัน'},D.days.map(d=>el('button',{class:'chip','aria-pressed':day===d,onclick:()=>{st.fDay=d;render()}},dayLabel(d)))));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกสนาม'},vens.map(v=>el('button',{class:'chip','aria-pressed':ven===v,onclick:()=>{st.fVen=v;lsSet('chor37.ven',v);render()}},v))));
+  const ms=D.M.filter(m=>m.d===day&&m.v===ven).sort((a,b)=>a.s-b.s);
+  const cur=ms.find(m=>!(st.res[m.k]&&st.res[m.k].win));
+  root.append(el('p',{class:'note'},'นับคะแนนตามกติกาของแต่ละกีฬา ระบบตัดสินจบเซต ช่วงเวลา หรือรอบให้อัตโนมัติ ผู้ชมเห็นคะแนนทันที กด “ย้อนกลับ” ถ้ากดผิด'));
+  ms.forEach(m=>{
+    const r=st.res[m.k],lv=st.live[m.k];const tm=teams(m);const isCur=m===cur;
+    const rd=m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ';
+    const head=el('div',{class:'fh'},el('span',{class:'ft'},hm(m.s)),el('span',null,m.sp+' '+m.c,el('small',null,rd)),r&&r.win?el('span',{class:'badge done'},'จบแล้ว'):lv?el('span',{class:'badge now'},'สด'):null);
+    const card=el('div',{class:'fcard'+(isCur?' cur':'')+(r&&r.win?' done':'')},head);
+    if(r&&r.win){
+      card.append(el('div',{class:'fdone'},tm.t.map((c,i)=>el('span',{class:r.win===c?'w':''},colDot(c),' สี'+c+(r.sa!=null?' '+(i?r.sb:r.sa):''))),el('button',{class:'btn sm',onclick:()=>openMatch(m)},'แก้ผล'),el('button',{class:'btn sm',onclick:()=>shareMatch(m)},'ภาพแชร์')));
+    }else if(!tm.known){
+      card.append(el('p',{class:'note'},'ยังไม่ทราบคู่แข่ง รอผลรอบคัดเลือก หรือกด “กรอกผล” เพื่อเลือกสีเอง'),el('button',{class:'btn sm',onclick:()=>openMatch(m)},'กรอกผล'));
+    }else{
+      card.append(scorer(m,tm,lv));
+    }
+    root.append(card);
+  });
+  if(!ms.length)root.append(el('div',{class:'empty'},'ไม่มีนัดที่สนามนี้ในวันที่เลือก'));
+  return root;
+}
+
+/* ===== rule-based scoring engines ===== */
+const RULE_DEF={
+ 'วอลเลย์บอล':{type:'sets',setsToWin:2,pts:25,lastPts:15,winBy:2,cap:0,src:'ระเบียบการแข่งขัน: 2 ใน 3 เซต เซตละ 25 แต้ม เซตที่ 3 เล่น 15 แต้ม ต้องนำ 2 แต้ม'},
+ 'เทเบิลเทนนิส':{type:'sets',setsToWin:2,pts:11,lastPts:11,winBy:2,cap:0,src:'ระเบียบการแข่งขัน: 2 ใน 3 เกม เกมละ 11 แต้ม ที่ 10–10 ต้องนำ 2 แต้ม'},
+ 'เซปักตะกร้อ':{type:'sets',setsToWin:2,pts:15,lastPts:15,winBy:2,cap:17,src:'ระบบ 15 แต้ม: 2 ใน 3 เซต เซตละ 15 แต้ม ที่ 14–14 ต้องนำ 2 แต้ม สูงสุด 17'},
+ 'บาสเกตบอล':{type:'periods',periods:4,pname:'ควอเตอร์',et:'ot',pens:false,btns:[1,2,3],foulLimit:4,foulScope:'q',src:'FIBA: 4 ควอเตอร์ เสมอต่อเวลาครั้งละ 5 นาทีจนกว่าจะชนะ ฟาวล์ทีมครบ 4 ในควอเตอร์ ฟาวล์ถัดไปได้ยิงลูกโทษ'},
+ 'ฟุตซอล':{type:'periods',periods:2,pname:'ครึ่ง',et:'two',pens:true,btns:[1],foulLimit:5,foulScope:'h',src:'FIFA Futsal: 2 ครึ่ง เสมอต่อเวลา 2 ช่วง แล้วดวลจุดโทษ ฟาวล์สะสมครั้งที่ 6 ของครึ่งได้เตะโทษจุดที่สอง (10 เมตร)'},
+ 'ฟุตบอล 11 คน':{type:'periods',periods:2,pname:'ครึ่ง',et:'two',pens:true,btns:[1],foulLimit:0,src:'IFAB: 2 ครึ่ง เสมอในรอบแพ้คัดออกต่อเวลา 2 ช่วง แล้วดวลจุดโทษ'},
+ 'เปตอง':{type:'ends',target:11,maxEnd:6,src:'ระเบียบการแข่งขัน: แข่งถึง 11 คะแนน แต่ละรอบ (เมน) ทีมที่ลูกใกล้เป้าที่สุดได้คะแนน 1–6'}
+};
+function ruleOf(sp){return Object.assign({},RULE_DEF[sp]||{type:'simple'},(st.rules||{})[sp]||{})}
+function periodName(R,p){
+  if(R.type!=='periods')return '';
+  if(p<R.periods)return R.periods===2?(p===0?'ครึ่งแรก':'ครึ่งหลัง'):R.pname+'ที่ '+(p+1);
+  const x=p-R.periods;
+  if(R.et==='ot')return 'ต่อเวลาครั้งที่ '+(x+1);
+  return x===0?'ต่อเวลาช่วงแรก':'ต่อเวลาช่วงหลัง';
+}
+function newLive(R){
+  if(R.type==='sets')return {f:'sets',sets:[],cur:[0,0]};
+  if(R.type==='periods')return {f:'per',p:0,sc:[[0,0]],fl:[[0,0]],pen:null};
+  if(R.type==='ends')return {f:'end',ends:[]};
+  return {f:'simple',sa:0,sb:0};
+}
+function setTarget(R,L){const n=L.sets.length+1;return n===2*R.setsToWin-1?R.lastPts:R.pts}
+function setWon(R,L,i){const a=L.cur[i],b=L.cur[1-i],tg=setTarget(R,L);if(R.cap&&a>=R.cap)return true;return a>=tg&&a-b>=(R.winBy||1)}
+function liveSum(R,L){
+  // returns {sa,sb,win,txt,note,done}
+  const o={sa:0,sb:0,win:null,txt:'',note:'',done:false};
+  if(L.f==='sets'){const w=[0,0];L.sets.forEach(s=>w[s[0]>s[1]?0:1]++);o.sa=w[0];o.sb=w[1];
+    o.done=w[0]>=R.setsToWin||w[1]>=R.setsToWin;if(o.done)o.win=w[0]>w[1]?0:1;
+    const lst=L.sets.map(s=>s[0]+'–'+s[1]).join(', ');
+    o.txt=(o.done?'จบ ':'เซต '+(L.sets.length+1)+': '+L.cur[0]+'–'+L.cur[1])+(lst?' ('+lst+')':'');
+    o.note=(R.type==='sets'&&RULE_DEF[R._sp]&&R._sp==='เทเบิลเทนนิส'?'เกม ':'เซต ')+lst;}
+  else if(L.f==='per'){const t=[0,0];L.sc.forEach(s=>{t[0]+=s[0];t[1]+=s[1]});o.sa=t[0];o.sb=t[1];
+    o.txt=(L.pen?'ดวลจุดโทษ '+L.pen[0]+'–'+L.pen[1]:periodName(R,L.p));
+    if(t[0]!==t[1])o.win=t[0]>t[1]?0:1;else if(L.pen&&L.pen[0]!==L.pen[1]){o.win=L.pen[0]>L.pen[1]?0:1;o.note='ชนะจุดโทษ '+Math.max(...L.pen)+'–'+Math.min(...L.pen)}
+    if(L.p>=R.periods&&!L.pen)o.note=o.note||'ต่อเวลา';}
+  else if(L.f==='end'){const t=[0,0];L.ends.forEach(e=>t[e[0]]+=e[1]);o.sa=t[0];o.sb=t[1];o.done=t[0]>=R.target||t[1]>=R.target;if(o.done)o.win=t[0]>t[1]?0:1;
+    o.txt='รอบที่ '+(L.ends.length+(o.done?0:1))+(o.done?' จบ':'');o.note=L.ends.length+' รอบ';}
+  else {o.sa=L.sa||0;o.sb=L.sb||0;if(o.sa!==o.sb)o.win=o.sa>o.sb?0:1}
+  return o;
+}
+const undoStack={};
+function commitLive(m,L,msg){
+  const R=ruleOf(m.sp);R._sp=m.sp;const S=liveSum(R,L);
+  const doc=Object.assign({},L,{sa:S.sa,sb:S.sb,txt:S.txt,note:S.note,win:S.win,done:S.done,by:st.teacher.name,ts:Date.now()});
+  st.live[m.k]=doc;render();if(msg)toast(msg);
+  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(st.live[m.k]).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
+}
+function act(m,fn){
+  const R=ruleOf(m.sp);R._sp=m.sp;const cur=st.live[m.k];
+  const L=cur&&cur.f?JSON.parse(JSON.stringify(cur)):newLive(R);
+  (undoStack[m.k]=undoStack[m.k]||[]).push(cur?JSON.stringify(cur):null);if(undoStack[m.k].length>60)undoStack[m.k].shift();
+  const msg=fn(L,R);if(msg===false){undoStack[m.k].pop();return}
+  commitLive(m,L,typeof msg==='string'?msg:null);
+}
+function undo(m){const s=undoStack[m.k];if(!s||!s.length)return toast('ไม่มีรายการให้ย้อน');const prev=s.pop();
+  if(prev===null){resetLive(m);return}const L=JSON.parse(prev);['sa','sb','txt','note','win','done','by','ts'].forEach(k=>delete L[k]);commitLive(m,L,'ย้อนกลับแล้ว')}
+function scorer(m,tm,lv){
+  const R=ruleOf(m.sp);R._sp=m.sp;const L=lv&&lv.f?lv:newLive(R);const S=liveSum(R,L);
+  const box=el('div',{class:'scorer'});
+  const col=i=>'--cc:var(--c-'+tm.t[i]+')';
+  box.append(el('p',{class:'note rule'},R.src||''));
+  if(R.type==='sets'){
+    const tg=setTarget(R,L);
+    box.append(el('div',{class:'setinfo'},S.done?'จบการแข่งขัน':'เซตที่ '+(L.sets.length+1)+' แข่งถึง '+tg+' แต้ม'+(R.cap?' (สูงสุด '+R.cap+')':'')+' · ชนะ '+R.setsToWin+' เซตได้แมตช์'));
+    box.append(el('div',{class:'fsc'},[0,1].map(i=>el('div',{class:'fteam',style:col(i)},el('div',{class:'fn'},'สี'+tm.t[i],el('span',{class:'setw'},'เซต '+(i?S.sb:S.sa))),
+      el('div',{class:'fv','aria-live':'polite'},L.cur[i]),
+      el('div',{class:'fb'},el('button',{class:'fbtn minus',type:'button','aria-label':'ลดแต้มสี'+tm.t[i],disabled:S.done||L.cur[i]===0||null,onclick:()=>act(m,L2=>{if(L2.cur[i]>0)L2.cur[i]--;else return false})},'−'),
+        el('button',{class:'fbtn plus',type:'button','aria-label':'เพิ่มแต้มสี'+tm.t[i],disabled:S.done||null,onclick:()=>act(m,(L2,R2)=>{L2.cur[i]++;if(setWon(R2,L2,i)){const sc=L2.cur.slice();L2.sets.push(sc);L2.cur=[0,0];return 'จบเซต '+L2.sets.length+' สี'+tm.t[i]+' ชนะ '+sc[i]+'–'+sc[1-i]}})},'+'))))));
+    if(L.sets.length)box.append(el('div',{class:'setlist'},L.sets.map((s,k)=>el('span',null,'เซต '+(k+1)+': ',el('b',{class:s[0]>s[1]?'w0':''},s[0]),'–',el('b',{class:s[1]>s[0]?'w1':''},s[1])))));
+  }else if(R.type==='periods'){
+    const p=L.p;const fk=R.foulScope==='q'?Math.min(p,R.periods-1):R.foulScope==='h'?Math.min(p,1):p;
+    const flr=L.fl[fk]||[0,0];
+    box.append(el('div',{class:'setinfo'},L.pen?'ดวลจุดโทษ':periodName(R,p)));
+    box.append(el('div',{class:'fsc'},[0,1].map(i=>{const tot=i?S.sb:S.sa;
+      const btns=L.pen?[el('button',{class:'fbtn minus',type:'button',onclick:()=>act(m,L2=>{if(L2.pen[i]>0)L2.pen[i]--;else return false})},'−'),el('button',{class:'fbtn plus',type:'button','aria-label':'ยิงจุดโทษเข้า สี'+tm.t[i],onclick:()=>act(m,L2=>{L2.pen[i]++})},'เข้า')]
+        :[el('button',{class:'fbtn minus',type:'button','aria-label':'ลดคะแนนสี'+tm.t[i],onclick:()=>act(m,L2=>{if(L2.sc[p][i]>0)L2.sc[p][i]--;else return false})},'−'),...R.btns.map(v=>el('button',{class:'fbtn plus',type:'button','aria-label':'เพิ่ม '+v+' คะแนนสี'+tm.t[i],onclick:()=>act(m,L2=>{L2.sc[p][i]+=v})},'+'+v))];
+      const fouls=R.foulLimit&&!L.pen?el('div',{class:'fouls'+(flr[i]>=R.foulLimit?' hot':'')},el('span',null,'ฟาวล์ทีม '+flr[i]),el('button',{class:'btn sm',type:'button',onclick:()=>act(m,L2=>{L2.fl[fk]=L2.fl[fk]||[0,0];L2.fl[fk][i]++;const n=L2.fl[fk][i];
+          if(R.foulScope==='q'&&n>R.foulLimit)return 'ฟาวล์ทีมเกิน '+R.foulLimit+' ครั้ง ฝ่ายตรงข้ามได้ยิงลูกโทษ';if(R.foulScope==='h'&&n>R.foulLimit)return 'ฟาวล์สะสมครั้งที่ '+n+' ฝ่ายตรงข้ามได้เตะโทษจุดที่สอง'})},'+ฟาวล์'),
+        flr[i]>=R.foulLimit?el('small',null,R.foulScope==='q'?'ครบ '+R.foulLimit+' ฟาวล์ถัดไปยิงลูกโทษ':'ครบ '+R.foulLimit+' ฟาวล์ถัดไปเตะโทษจุด 10 เมตร'):null):null;
+      return el('div',{class:'fteam',style:col(i)},el('div',{class:'fn'},'สี'+tm.t[i]),el('div',{class:'fv','aria-live':'polite'},L.pen?L.pen[i]:tot),L.pen?el('div',{class:'note',style:'margin:0'},'ประตูในเกม '+tot):null,el('div',{class:'fb'+(btns.length>2?' b3':'')},btns),fouls)})));
+    if(L.sc.length>1||p>0)box.append(el('div',{class:'setlist'},L.sc.map((s,k)=>el('span',null,periodName(R,k)+': '+s[0]+'–'+s[1]))));
+    const tied=S.sa===S.sb;const reg=p>=R.periods-1;const nav=el('div',{class:'actions'});
+    if(!L.pen){
+      if(p<R.periods-1)nav.append(el('button',{class:'btn',onclick:()=>act(m,L2=>{L2.p++;L2.sc.push([0,0]);if(!L2.fl[L2.p])L2.fl[L2.p]=[0,0];return 'เริ่ม'+periodName(R,L2.p)})},'ไป'+periodName(R,p+1)));
+      else if(tied&&R.et&&(R.et==='ot'||p<R.periods+1))nav.append(el('button',{class:'btn',onclick:()=>act(m,L2=>{L2.p++;L2.sc.push([0,0]);if(!L2.fl[L2.p])L2.fl[L2.p]=[0,0];return 'เริ่ม'+periodName(R,L2.p)})},R.et==='ot'?'เสมอ: '+periodName(R,p+1):'ไป'+periodName(R,p+1)));
+      if(reg&&tied&&R.pens)nav.append(el('button',{class:'btn',onclick:()=>act(m,L2=>{L2.pen=[0,0];return 'เริ่มดวลจุดโทษ'})},'เสมอ: ดวลจุดโทษ'));
+    }
+    if(p>0&&!L.pen)nav.append(el('button',{class:'btn sm',onclick:()=>act(m,L2=>{if(L2.sc[L2.p][0]||L2.sc[L2.p][1])return false;L2.sc.pop();L2.p--})},'กลับช่วงก่อน'));
+    box.append(nav);
+  }else if(R.type==='ends'){
+    box.append(el('div',{class:'setinfo'},S.done?'จบการแข่งขัน':'รอบที่ '+(L.ends.length+1)+' · แข่งถึง '+R.target+' คะแนน'));
+    box.append(el('div',{class:'fsc'},[0,1].map(i=>el('div',{class:'fteam',style:col(i)},el('div',{class:'fn'},'สี'+tm.t[i]),el('div',{class:'fv','aria-live':'polite'},i?S.sb:S.sa),
+      el('div',{class:'endbtns'},Array.from({length:R.maxEnd},(_,k)=>el('button',{class:'fbtn plus sm',type:'button',disabled:S.done||null,'aria-label':'รอบนี้สี'+tm.t[i]+'ได้ '+(k+1)+' คะแนน',onclick:()=>act(m,L2=>{L2.ends.push([i,k+1]);return 'รอบที่ '+L2.ends.length+': สี'+tm.t[i]+' +'+(k+1)})},'+'+(k+1))))))));
+    box.append(el('p',{class:'note'},'แต่ละรอบให้กดเฉพาะทีมที่ได้คะแนน ตามจำนวนลูกที่ใกล้เป้ากว่าลูกที่ดีที่สุดของฝ่ายตรงข้าม'));
+    if(L.ends.length)box.append(el('div',{class:'setlist'},L.ends.map((e,k)=>el('span',null,'รอบ '+(k+1)+': ',colDot(tm.t[e[0]]),' +'+e[1]))));
+  }
+  const canFinish=R.type==='periods'?S.win!=null:S.done||R.type==='simple';
+  box.append(el('div',{class:'actions'},el('button',{class:'btn ok',onclick:()=>openMatch(m)},canFinish?'จบการแข่งขัน บันทึกผล':'บันทึกผล'),
+    el('button',{class:'btn sm',onclick:()=>undo(m)},'ย้อนกลับ'),lv?el('button',{class:'btn sm danger',onclick:()=>{undoStack[m.k]=[];resetLive(m)}},'ล้างคะแนนสด'):null));
+  if(S.done&&S.win!=null)box.prepend(el('div',{class:'banner',role:'status'},'สี'+tm.t[S.win]+' ชนะ '+S.sa+'–'+S.sb+' กด “จบการแข่งขัน บันทึกผล” เพื่อยืนยัน'));
+  return box;
+}
+function rulesAdmin(){
+  const wrap=el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'กติกาการนับคะแนนสด (เฉพาะแอดมิน)'),el('p',{class:'note'},'ค่าเริ่มต้นตามกติกาสากล ถ้าระเบียบการแข่งขันของโรงเรียนต่างออกไป ปรับที่นี่ แล้วกดบันทึก'));
+  Object.keys(RULE_DEF).forEach(sp=>{const R=ruleOf(sp);const f={};const num=(k,lab,min)=>{f[k]=el('input',{type:'number',min:String(min||0),value:R[k]});return el('label',null,lab,f[k])};
+    let fields=[];
+    if(R.type==='sets')fields=[num('setsToWin','ชนะกี่เซต',1),num('pts','แต้มต่อเซต',1),num('lastPts','แต้มเซตตัดสิน',1),num('winBy','ต้องนำกี่แต้ม',1),num('cap','แต้มสูงสุด (0=ไม่จำกัด)',0)];
+    else if(R.type==='periods'){fields=[num('periods','จำนวนช่วงเวลาปกติ',1)];f.pens=el('input',{type:'checkbox',style:'width:auto'});f.pens.checked=!!R.pens;f.et=el('select',null,el('option',{value:''},'ไม่ต่อเวลา'),el('option',{value:'two'},'ต่อเวลา 2 ช่วง'),el('option',{value:'ot'},'ต่อเวลาครั้งละช่วงจนกว่าจะชนะ'));f.et.value=R.et||'';
+      fields.push(el('label',null,'การต่อเวลา',f.et),el('label',{style:'display:flex;gap:8px;align-items:center'},f.pens,'ดวลจุดโทษเมื่อเสมอ'));if(R.foulLimit!=null)fields.push(num('foulLimit','ฟาวล์ทีมก่อนลงโทษ (0=ไม่นับ)',0))}
+    else if(R.type==='ends')fields=[num('target','แข่งถึงกี่คะแนน',1),num('maxEnd','คะแนนสูงสุดต่อรอบ',1)];
+    const d=el('details',{class:'rulebox'},el('summary',null,sportIcon(sp),sp),el('p',{class:'note'},RULE_DEF[sp].src),el('div',{class:'rgrid'},fields),
+      el('div',{class:'actions'},el('button',{class:'btn sm',onclick:async()=>{const o={};for(const k in f){o[k]=f[k].type==='checkbox'?f[k].checked:f[k].tagName==='SELECT'?f[k].value:+f[k].value}
+        const all=Object.assign({},st.rules||{});all[sp]=o;try{await db.doc('config/rules').set(all);toast('บันทึกกติกา'+sp+'แล้ว');logAct('ตั้งค่า','กติกา'+sp+' '+JSON.stringify(o))}catch(e){toast('บันทึกไม่สำเร็จ')}}},'บันทึก'),
+        el('button',{class:'btn sm',onclick:async()=>{const all=Object.assign({},st.rules||{});delete all[sp];try{await db.doc('config/rules').set(all);toast('กลับเป็นค่าสากลแล้ว')}catch(e){toast('บันทึกไม่สำเร็จ')}}},'คืนค่ากติกาสากล')));
+    wrap.append(d)});
+  return wrap;
+}
+
+/* ===== share images ===== */
+const HEX={'เขียว':'#1f9d4c','ชมพู':'#e0529a','น้ำเงิน':'#2457d6','แดง':'#d63030'};
+let logoImg=null;function getLogo(){return new Promise(res=>{if(logoImg)return res(logoImg);const i=new Image();i.onload=()=>{logoImg=i;res(i)};i.onerror=()=>res(null);i.src=LOGO})}
+async function fontsReady(){try{await Promise.all(['italic 800 80px Kanit','600 40px Kanit','500 30px "Noto Sans Thai"'].map(f=>document.fonts.load(f)))}catch(e){}}
+async function baseCanvas(W,H){
+  await fontsReady();const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
+  const gr=g.createLinearGradient(0,0,W,H);gr.addColorStop(0,'#272e86');gr.addColorStop(1,'#12154a');g.fillStyle=gr;g.fillRect(0,0,W,H);
+  g.fillStyle='rgba(244,180,0,.10)';g.beginPath();g.moveTo(W*.62,0);g.lineTo(W*.78,0);g.lineTo(W*.46,H);g.lineTo(W*.30,H);g.closePath();g.fill();
+  const lg=await getLogo();if(lg){const h=150,w=lg.width*h/lg.height;g.drawImage(lg,60,56,w,h)}
+  g.fillStyle='#fff';g.font='italic 800 64px Kanit, sans-serif';g.fillText('ช่อชัยพฤกษ์เกมส์',200,128);
+  g.fillStyle='#f4b400';g.font='italic 700 38px Kanit, sans-serif';g.fillText('ครั้งที่ 37',204,182);
+  g.fillStyle='#c8cdf2';g.font='500 26px "Noto Sans Thai", sans-serif';g.fillText('โรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร',204,222);
+  // colour stripe
+  const cw=W/4;COLS.forEach((c,i)=>{g.fillStyle=HEX[c];g.fillRect(i*cw,H-18,cw,18)});
+  return {cv,g,W,H};
+}
+function skewRect(g,x,y,w,h,s,fill){g.fillStyle=fill;g.beginPath();g.moveTo(x+s,y);g.lineTo(x+w,y);g.lineTo(x+w-s,y+h);g.lineTo(x,y+h);g.closePath();g.fill()}
+async function shareMatch(m){
+  const r=st.res[m.k];if(!r||!r.win)return;const tm=teams(m).t;
+  const {cv,g,W,H}=await baseCanvas(1080,1350);
+  const rd=m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ';
+  g.fillStyle='#fff';g.font='600 54px Kanit, sans-serif';g.fillText(m.sp,60,350);
+  g.fillStyle='#c8cdf2';g.font='500 36px Kanit, sans-serif';g.fillText(m.c+'  '+rd,60,404);
+  tm.forEach((c,i)=>{const y=470+i*250;skewRect(g,60,y,960,210,40,HEX[c]);
+    g.fillStyle='#fff';g.font='italic 800 84px Kanit, sans-serif';g.fillText('สี'+c,120,y+130);
+    if(r.sa!=null){g.font='italic 800 150px Kanit, sans-serif';g.textAlign='right';g.fillText(String(i?r.sb:r.sa),960,y+160);g.textAlign='left'}
+    if(r.win===c){g.fillStyle='#f4b400';g.font='700 34px Kanit, sans-serif';g.fillText('ชนะ',124,y+182)}});
+  g.fillStyle='#f4b400';g.font='italic 800 66px Kanit, sans-serif';g.fillText((m.st==='F'?'แชมป์ ':'')+'สี'+r.win+(m.st==='F'?'':' ชนะ'),60,1060);
+  g.fillStyle='#c8cdf2';g.font='500 32px "Noto Sans Thai", sans-serif';g.fillText(dayLabel(m.d)+' 2569  เวลา '+hm(m.s)+' น.  '+m.v,60,1130);
+  if(r.note){g.fillText(r.note.slice(0,60),60,1180)}
+  showImage(cv,'ผล-'+m.sp+'-'+m.c);
+}
+async function shareStandings(){
+  const s=standings();const {cv,g,W,H}=await baseCanvas(1080,1350);
+  g.fillStyle='#fff';g.font='italic 800 60px Kanit, sans-serif';g.fillText('ตารางคะแนนรวม',60,350);
+  const pg=progress();g.fillStyle='#c8cdf2';g.font='500 32px Kanit, sans-serif';g.fillText('แข่งจบแล้ว '+pg.done+' จาก '+pg.all+' รายการ',60,402);
+  s.forEach((x,i)=>{const y=450+i*190;skewRect(g,60,y,960,160,34,HEX[x.c]);
+    g.fillStyle='rgba(0,0,0,.25)';g.fillRect(96,y+28,74,52);g.fillStyle='#fff';g.font='700 36px Kanit, sans-serif';g.textAlign='center';g.fillText(String(i+1),133,y+67);g.textAlign='left';
+    g.fillStyle='#fff';g.font='italic 800 66px Kanit, sans-serif';g.fillText('สี'+x.c,196,y+82);
+    g.font='600 30px Kanit, sans-serif';['#d9a400','#9aa6b6','#c0773a'].forEach((mc,j)=>{g.fillStyle=mc;g.beginPath();g.arc(214+j*120,y+122,15,0,7);g.fill();g.fillStyle='#fff';g.fillText(String(x.pl[j]),238+j*120,y+133)});
+    g.font='italic 800 110px Kanit, sans-serif';g.textAlign='right';g.fillText(String(x.pts),975,y+118);g.textAlign='left'});
+  const n=bkkNow();g.fillStyle='#c8cdf2';g.font='500 30px "Noto Sans Thai", sans-serif';g.fillText('ข้อมูล ณ '+n.getDate()+' '+['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][n.getMonth()]+' '+(n.getFullYear()+543)+' เวลา '+hm(n.getHours()*60+n.getMinutes())+' น.',60,1260);
+  showImage(cv,'ตารางคะแนน-ช่อชัยพฤกษ์37');
+}
+function showImage(cv,name){
+  const url=cv.toDataURL('image/png');
+  const img=el('img',{src:url,alt:'ภาพสรุปผลสำหรับแชร์',style:'width:100%;border-radius:8px;display:block'});
+  const acts=el('div',{class:'actions'});
+  cv.toBlob(b=>{if(!b)return;const f=new File([b],name+'.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[f]}))acts.prepend(el('button',{class:'btn pri',onclick:()=>navigator.share({files:[f],title:name}).catch(()=>{})},'แชร์ไปยังแอปอื่น'))});
+  acts.append(el('a',{class:'btn',href:url,download:name+'.png'},'ดาวน์โหลดภาพ'));
+  const ov=overlay(el('div',null,el('h2',null,'ภาพสำหรับแชร์'),img,el('p',{class:'note'},'ถ้าปุ่มดาวน์โหลดใช้ไม่ได้ ให้กดค้างที่ภาพ (มือถือ) หรือคลิกขวา แล้วเลือกบันทึกรูป'),acts,el('div',{class:'actions'},el('button',{class:'btn',onclick:()=>ov.remove()},'ปิด'))));
+}
+/* ===== report ===== */
+function openReport(){
+  const s=standings();const pg=progress();const P=st.cfg.points;
+  const rdName=m=>m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ';
+  const lines=['รายงานสรุปผลการแข่งขัน ช่อชัยพฤกษ์เกมส์ ครั้งที่ 37','โรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร','','อันดับรวม'];
+  s.forEach((x,i)=>lines.push((i+1)+'. สี'+x.c+' '+x.pts+' คะแนน (ที่ 1: '+x.pl[0]+', ที่ 2: '+x.pl[1]+', ที่ 3: '+x.pl[2]+', ที่ 4: '+x.pl[3]+')'));
+  lines.push('','ผลแยกตามประเภท');
+  const win=[['ชนิดกีฬา','ประเภท/รุ่น','อันดับ','สี','คะแนนที่ได้']];
+  EVENTS.forEach(ev=>{const pl=Object.entries(eventPlaces(ev)).sort((a,b)=>a[1]-b[1]);lines.push(ev.sp+' '+ev.c+': '+(pl.length?pl.map(([c,p])=>'ที่ '+p+' สี'+c).join(', '):'ยังไม่มีผล'));pl.forEach(([c,p])=>win.push([ev.sp,ev.c,p,c,P[p-1]]))});
+  D.A.forEach(a=>{const r=st.res[a.k];if(!r||!r.ranks)return;const o=Object.entries(r.ranks).sort((x,y)=>x[1]-y[1]);lines.push('กรีฑา '+a.ev+' '+a.g+': '+o.map(([c,p])=>'ที่ '+p+' สี'+c).join(', '));o.forEach(([c,p])=>win.push(['กรีฑา '+a.ev,a.g,p,c,P[p-1]]))});
+  if(pg.done<pg.all)lines.push('','หมายเหตุ: ยังไม่มีผลอีก '+(pg.all-pg.done)+' รายการ');
+  const text=lines.join('\n');
+  const all=[['วันที่','เวลา','ชนิดกีฬา','ประเภท','รอบ','สนาม','สี A','คะแนน A','สี B','คะแนน B','ผู้ชนะ','หมายเหตุ','ผู้บันทึก']];
+  D.M.slice().sort((a,b)=>a.d-b.d||a.s-b.s).forEach(m=>{const r=st.res[m.k]||{};const t=teams(m).t;all.push([m.d+' พ.ย. 2569',hm(m.s),m.sp,m.c,rdName(m),m.v,t[0]||'',r.sa!=null?r.sa:'',t[1]||'',r.sb!=null?r.sb:'',r.win||'',r.note||'',r.by||''])});
+  const ta=el('textarea',{rows:'12',readonly:true,'aria-label':'รายงานสรุป'});ta.value=text;
+  const btns=[
+    el('button',{class:'btn pri',onclick:async()=>{try{await navigator.clipboard.writeText(text);toast('คัดลอกรายงานแล้ว')}catch(e){ta.focus();ta.select()}}},'คัดลอกรายงาน'),
+    el('button',{class:'btn',onclick:()=>csvCopy(win)},'รายชื่อทำเกียรติบัตร (CSV)'),
+    el('button',{class:'btn',onclick:()=>csvCopy(all)},'ผลทุกนัด (CSV)'),
+    el('button',{class:'btn',onclick:()=>csvCopy([['อันดับ','สี','ที่ 1','ที่ 2','ที่ 3','ที่ 4','คะแนน'],...s.map((x,i)=>[i+1,x.c,...x.pl,x.pts])])},'ตารางคะแนนรวม (CSV)')];
+  if(st.teacher&&COLS.some(c=>(st.roster[c]||[]).length)){btns.push(el('button',{class:'btn',onclick:async()=>{const s=await db.collection('checkin').get();const keep=st.checkin;st.checkin={};s.docs.forEach(d=>st.checkin[d.id]=d.data());const {S}=attStats();st.checkin=keep;csvCopy([['สี','จำนวนคน-รอบที่มา','ทั้งหมด','เปอร์เซ็นต์'],...COLS.map(x=>[x,S[x].pres,S[x].poss,S[x].poss?Math.round(S[x].pres*100/S[x].poss):''])])}},'สรุปการเข้าร่วม (CSV)'))}
+  const ov=overlay(el('div',null,el('h2',null,'รายงานสรุปผล'),el('p',{class:'note'},'ปุ่ม CSV คัดลอกเป็นตาราง วางใน Excel หรือ Google Sheets แล้วใช้ทำเกียรติบัตรด้วยจดหมายเวียนได้'),ta,el('div',{class:'actions'},btns),el('div',{class:'actions'},el('button',{class:'btn',onclick:()=>ov.remove()},'ปิด'))));
+}
+function viewAth(){
+  const root=el('div');root.append(el('h2',null,'กรีฑา วันที่ 19 พ.ย.'));
+  root.append(el('p',{class:'note'},'ช่องวิ่งจัดสลับให้ทุกสีได้ช่องวิ่งเท่ากัน · 800 เมตรออกตัวแยกช่องแล้วรวมช่อง · 1,500 เมตรออกตัวร่วมกัน'));
+  D.A.slice().sort((a,b)=>a.s-b.s).forEach(a=>root.append(athCard(a,true)));
+  return root;
+}
+
+/* summary text */
+function summaryText(){
+  const lines=['ผลการแข่งขัน ช่อชัยพฤกษ์เกมส์ ครั้งที่ 37 · '+dayLabel(st.day)];
+  const list=D.M.filter(m=>m.d===st.day&&st.res[m.k]&&st.res[m.k].win).sort((a,b)=>a.s-b.s);
+  list.forEach(m=>{const r=st.res[m.k];const t=teams(m).t;const sc=r.sa!=null?' ('+r.sa+'-'+r.sb+')':'';const rd=m.st==='S'?'คัดเลือก':m.st==='T'?'ชิงที่ 3':'ชิงชนะเลิศ';
+    lines.push(hm(m.s)+' '+m.sp+' '+m.c+' '+rd+': สี'+t[0]+' พบ สี'+t[1]+sc+' ชนะ สี'+r.win)});
+  if(st.day===19)D.A.filter(a=>st.res[a.k]&&st.res[a.k].ranks).sort((a,b)=>a.s-b.s).forEach(a=>{const o=Object.entries(st.res[a.k].ranks).sort((x,y)=>x[1]-y[1]).map(([c,p])=>p+'.'+c).join(' ');lines.push(hm(a.s)+' '+a.ev+' '+a.g+': '+o)});
+  if(lines.length===1)lines.push('ยังไม่มีผลที่บันทึกของวันนี้');
+  lines.push('');lines.push('คะแนนรวม: '+standings().map(x=>'สี'+x.c+' '+x.pts).join(' | '));
+  return lines.join('\n');
+}
+function copySummary(){
+  const t=summaryText();
+  const ta=el('textarea',{rows:'10',readonly:true,'aria-label':'สรุปผล',style:'margin-top:10px'});ta.value=t;
+  const ov=overlay(el('div',null,el('h2',null,'สรุปผลสำหรับส่งกลุ่มแชท'),ta,el('div',{class:'actions'},
+    el('button',{class:'btn pri',onclick:async()=>{try{await navigator.clipboard.writeText(t);toast('คัดลอกแล้ว')}catch(e){ta.focus();ta.select();toast('กดคัดลอกที่ข้อความด้านบน')}}},'คัดลอก'),
+    el('button',{class:'btn',onclick:()=>ov.remove()},'ปิด'))));
+}
+
+/* modal */
+function overlay(content){
+  const prev=document.activeElement;
+  const ov=el('div',{class:'ov',role:'dialog','aria-modal':'true',onclick:e=>{if(e.target===ov)ov.remove()}},el('div',{class:'modal'},content));
+  const rm=ov.remove.bind(ov);ov.remove=()=>{document.removeEventListener('keydown',esc);rm();if(prev&&prev.isConnected&&prev.focus)prev.focus()};
+  const esc=e=>{if(e.key==='Escape')ov.remove()};document.addEventListener('keydown',esc);
+  $('#layer').append(ov);const f=ov.querySelector('input,select,button');if(f)f.focus();return ov;
+}
+function descKey(k){const m=MATCH[k];if(m)return m.sp+' '+m.c+' '+(m.st==='S'?'คัดเลือก':m.st==='T'?'ชิงที่ 3':'ชิงชนะเลิศ')+' ('+m.d+' พ.ย. '+hm(m.s)+')';const a=D.A.find(x=>x.k===k);return a?a.ev+' '+a.g:k}
+function descRes(k,b){if(b.ranks)return Object.entries(b.ranks).sort((x,y)=>x[1]-y[1]).map(([c,p])=>p+'.'+c).join(' ');return 'ชนะ สี'+b.win+(b.sa!=null?' ('+b.sa+'-'+b.sb+')':'')}
+function lastBy(r){return r&&r.by?el('p',{class:'note'},'บันทึกล่าสุดโดย '+r.by+(r.ts?' · '+tstr(r.ts):'')):null}
+async function save(key,body,okMsg){
+  if(!db)return toast('ยังไม่ได้เชื่อมต่อฐานข้อมูล');
+  const doc=Object.assign({},body,{by:st.teacher.name,ts:Date.now()});
+  try{const ref=db.doc('public/results');try{await ref.update(new firebase.firestore.FieldPath(key),doc)}catch(e1){if(e1&&e1.code==='not-found')await ref.set({[key]:doc},{merge:true});else throw e1}toast(okMsg||'บันทึกแล้ว');logAct('ผล',descKey(key)+': '+descRes(key,body));return true}catch(e){toast('บันทึกไม่สำเร็จ: '+(e&&e.code==='permission-denied'?'บัญชีนี้ยังไม่มีสิทธิ์บันทึก':'ลองใหม่อีกครั้ง'));return false}
+}
+async function clearRes(key){
+  try{await db.doc('public/results').update(new firebase.firestore.FieldPath(key),firebase.firestore.FieldValue.delete());toast('ลบผลแล้ว');logAct('ลบผล',descKey(key));return true}catch(e){toast('ลบไม่สำเร็จ');return false}
+}
+function openMatch(m){
+  const r=st.res[m.k]||{};const tm0=teams(m);let t=tm0.t.slice();
+  const err=el('div',{class:'err',role:'alert'});
+  const manual=!tm0.known||!!r.tms;
+  const lab=[el('span'),el('span')];const A=el('div',{class:'row2'}),B=el('div',{class:'row2'});
+  const lv=st.live[m.k];const sa=el('input',{type:'number',min:'0',inputmode:'numeric',id:'sa',value:r.sa!=null?r.sa:(lv?lv.sa:'')});
+  const sb=el('input',{type:'number',min:'0',inputmode:'numeric',id:'sb',value:r.sb!=null?r.sb:(lv?lv.sb:'')});
+  const win=el('select',{id:'win'});
+  const tsel=[0,1].map(i=>{const s=el('select',{'aria-label':'สีคู่แข่งคนที่ '+(i+1)},el('option',{value:''},'เลือกสี'),COLS.map(c=>el('option',{value:c},'สี'+c)));s.value=t[i]||'';return s});
+  function redraw(){
+    A.replaceChildren(t[0]?colTag(t[0]):el('span',{class:'team tbd'},placeholderFor(m,0)),sa);
+    B.replaceChildren(t[1]?colTag(t[1]):el('span',{class:'team tbd'},placeholderFor(m,1)),sb);
+    const cur=win.value;win.replaceChildren(el('option',{value:''},'เลือกผู้ชนะ'),...t.filter(Boolean).map(c=>el('option',{value:c},'สี'+c)));win.value=t.includes(cur)?cur:'';
+  }
+  tsel.forEach((s,i)=>s.addEventListener('change',()=>{t[i]=s.value||null;redraw()}));
+  redraw();win.value=r.win||(lv&&lv.win!=null&&t[lv.win]?t[lv.win]:'');
+  const auto=()=>{const a=sa.value,b=sb.value;if(t[0]&&t[1]&&a!==''&&b!==''&&+a!==+b)win.value=+a>+b?t[0]:t[1]};
+  sa.addEventListener('input',auto);sb.addEventListener('input',auto);if(!r.win&&!(lv&&lv.win!=null))auto();
+  const note=el('input',{type:'text',id:'note',maxlength:'120',value:r.note||(lv&&lv.note?lv.note:''),placeholder:'เช่น ชนะจุดโทษ'});
+  const rd=m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ';
+  const ov=overlay(el('div',null,el('h2',null,m.sp+' '+m.c),el('div',{class:'meta',style:'margin-bottom:12px'},rd+' · '+dayLabel(m.d)+' '+hm(m.s)+' น. · '+m.v),
+    el('div',{class:'form'},
+      manual?el('div',null,el('p',{class:'note'},'ยังไม่ทราบคู่ชิงจากรอบคัดเลือก เลือกสีที่ลงแข่งเอง (ถ้ากรอกผลรอบคัดเลือกครบ ระบบจะเติมให้อัตโนมัติ)'),el('div',{class:'row2'},tsel[0],tsel[1])):null,
+      A,B,
+      el('label',null,'ผู้ชนะ (ต้องเลือก ถ้าคะแนนเท่ากันให้เลือกเอง)',win),
+      el('label',null,'หมายเหตุ (ไม่บังคับ)',note),err,lastBy(st.res[m.k]),
+      el('div',{class:'actions'},
+        el('button',{class:'btn pri',onclick:async e=>{const btn=e.currentTarget;
+          if(!t[0]||!t[1]||t[0]===t[1]){err.textContent='กรุณาเลือกสีที่ลงแข่งให้ครบสองสีและไม่ซ้ำกัน';return}
+          if(!win.value){err.textContent='กรุณาเลือกผู้ชนะ';return}
+          if((sa.value===''||sb.value==='')&&(sa.value!==''||sb.value!=='')){err.textContent='กรอกคะแนนให้ครบทั้งสองสี หรือเว้นว่างทั้งคู่';return}
+          const body={win:win.value,note:note.value.trim()};if(sa.value!==''){body.sa=+sa.value;body.sb=+sb.value}
+          if(manual)body.tms=t.slice();if(lv&&lv.sets)body.sets=lv.sets;if(lv&&lv.f==='per')body.per=lv.sc;if(lv&&lv.pen)body.pen=lv.pen;
+          if(await busy(btn,()=>save(m.k,body))){ov.remove();if(st.live[m.k]){delete st.live[m.k];db.collection('live').doc(m.k).delete().catch(()=>{})}}
+        }},'บันทึกผล'),
+        r.win?el('button',{class:'btn danger',onclick:async()=>{if(await clearRes(m.k))ov.remove()}},'ลบผล'):null,
+        el('button',{class:'btn',onclick:()=>ov.remove()},'ยกเลิก')))));
+}
+function openAth(a){
+  const r=st.res[a.k]||{};const rk=r.ranks||{};
+  const err=el('div',{class:'err',role:'alert'});
+  const sels={};
+  const form=el('div',{class:'form'});
+  COLS.forEach(c=>{const s=el('select',{id:'rk-'+c},el('option',{value:''},'—'),[1,2,3,4].map(p=>el('option',{value:p},'อันดับ '+p)));s.value=rk[c]||'';sels[c]=s;form.append(el('div',{class:'row2',style:'grid-template-columns:1fr 150px'},colTag(c),s))});
+  const note=el('input',{type:'text',id:'note',maxlength:'120',value:r.note||'',placeholder:'เช่น เวลา 12.45 วินาที'});
+  form.append(el('label',null,'หมายเหตุ (ไม่บังคับ)',note),err,lastBy(st.res[a.k]));
+  const ov=overlay(el('div',null,el('h2',null,a.ev+' · '+a.g),el('div',{class:'meta',style:'margin-bottom:12px'},'19 พ.ย. '+hm(a.s)+' น.'),form,
+    el('div',{class:'actions'},
+      el('button',{class:'btn pri',onclick:async e=>{const btn=e.currentTarget;
+        const v=COLS.map(c=>sels[c].value);
+        if(v.some(x=>!x)||new Set(v).size!==4){err.textContent='ต้องให้อันดับ 1 ถึง 4 ครบ ไม่ซ้ำกัน';return}
+        const ranks={};COLS.forEach(c=>ranks[c]=+sels[c].value);
+        if(await busy(btn,()=>save(a.k,{ranks,note:note.value.trim()})))ov.remove();
+      }},'บันทึกผล'),
+      r.ranks?el('button',{class:'btn danger',onclick:async()=>{if(await clearRes(a.k))ov.remove()}},'ลบผล'):null,
+      el('button',{class:'btn',onclick:()=>ov.remove()},'ยกเลิก'))));
+}
+
+/* staff */
+function viewStaff(){
+  const root=el('div');
+  root.append(el('h2',null,'สำหรับครูผู้รับผิดชอบและผู้ดูแล'));
+  if(!st.dbOn){root.append(el('div',{class:'banner'},st.cfgMissing?'ยังไม่ได้ตั้งค่า Firebase (ไฟล์ firebase-config.js)':'กำลังเชื่อมต่อ…'));return root}
+  if(!st.teacher){
+    if(st.user){
+      root.append(el('div',{class:'panel'},el('p',null,'เข้าสู่ระบบเป็น ',el('b',null,st.user.email)),
+        el('div',{class:'banner'},st.roleLoaded?'บัญชีนี้รอแอดมินอนุมัติสิทธิ์ครู แจ้งแอดมินให้เปิดสิทธิ์ที่หน้า “จัดการบัญชีครู”':'กำลังตรวจสิทธิ์…'),
+        el('button',{class:'btn',onclick:()=>auth.signOut()},'ออกจากระบบ')));
+      return root;
+    }
+    const mode=st.loginMode||'in';
+    const em=el('input',{type:'email',id:'em',autocomplete:'username',placeholder:'อีเมล'});
+    const pw=el('input',{type:'password',id:'pw',autocomplete:mode==='up'?'new-password':'current-password'});
+    const nm=el('input',{type:'text',id:'tname',maxlength:'40',placeholder:'เช่น ครูสมชาย (ฟุตบอล)'});
+    const show=el('input',{type:'checkbox',id:'showpw',style:'width:auto'});show.addEventListener('change',()=>{pw.type=show.checked?'text':'password'});
+    const err=el('div',{class:'err',role:'alert'});
+    const msg=c=>({'auth/invalid-credential':'อีเมลหรือรหัสผ่านไม่ถูกต้อง','auth/invalid-email':'รูปแบบอีเมลไม่ถูกต้อง','auth/email-already-in-use':'อีเมลนี้ลงทะเบียนแล้ว ให้เข้าสู่ระบบแทน','auth/weak-password':'รหัสผ่านต้องมีอย่างน้อย 6 ตัว','auth/too-many-requests':'ลองผิดหลายครั้ง รอสักครู่แล้วลองใหม่','auth/network-request-failed':'เชื่อมต่ออินเทอร์เน็ตไม่ได้'}[c]||'ทำรายการไม่สำเร็จ ('+c+')');
+    const submit=async e=>{const btn=e&&e.currentTarget;err.textContent='';
+      try{await busy(btn||el('button'),async()=>{
+        if(mode==='in')await auth.signInWithEmailAndPassword(em.value.trim(),pw.value);
+        else if(mode==='up'){if(!nm.value.trim()){err.textContent='กรุณาใส่ชื่อครู';return}const c=await auth.createUserWithEmailAndPassword(em.value.trim(),pw.value);await db.doc('users/'+c.user.uid).set({name:nm.value.trim(),email:c.user.email,ts:Date.now()});st.loginMode='in';toast('ลงทะเบียนแล้ว รอแอดมินอนุมัติ')}
+        else{await auth.sendPasswordResetEmail(em.value.trim());toast('ส่งลิงก์ตั้งรหัสใหม่ไปที่อีเมลแล้ว');st.loginMode='in';render()}
+      })}catch(x){err.textContent=msg(x&&x.code)}};
+    pw.addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+    const tabs=el('div',{class:'chips',role:'group'},[['in','เข้าสู่ระบบ'],['up','ลงทะเบียนครูใหม่'],['reset','ลืมรหัสผ่าน']].map(([k,tx])=>el('button',{class:'chip','aria-pressed':mode===k,onclick:()=>{st.loginMode=k;render()}},tx)));
+    root.append(el('div',{class:'panel'},tabs,el('div',{class:'form'},
+      mode==='up'?el('label',null,'ชื่อครู (แสดงกับผลที่บันทึก)',nm):null,el('label',null,'อีเมล',em),
+      mode!=='reset'?el('label',null,'รหัสผ่าน'+(mode==='up'?' (อย่างน้อย 6 ตัว)':''),pw):null,
+      mode!=='reset'?el('label',{style:'display:flex;gap:8px;align-items:center;font-weight:500'},show,'แสดงรหัสผ่าน'):null,err,
+      el('div',{class:'actions'},el('button',{class:'btn pri',onclick:submit},mode==='in'?'เข้าสู่ระบบ':mode==='up'?'ลงทะเบียน':'ส่งลิงก์ตั้งรหัสใหม่')))));
+    root.append(el('p',{class:'note'},'ครูแต่ละท่านใช้อีเมลของตัวเอง ลงทะเบียนครั้งแรกแล้วรอแอดมินอนุมัติ หลังอนุมัติจะมีปุ่ม “กรอกผล” ทุกนัด แท็บ “กรรมการสนาม” และ “เช็คการเข้าร่วม”'));
+    return root;
+  }
+  root.append(el('div',{class:'panel me'},el('span',null,'เข้าสู่ระบบเป็น ',el('b',null,st.teacher.name)),el('button',{class:'btn sm',onclick:()=>{go(()=>{auth.signOut()})}},'ออกจากระบบ')));
+  // notice
+  const nin=el('input',{type:'text',id:'notice',maxlength:'160',value:st.notice,placeholder:'เช่น ฝนตก เลื่อนนัดสนามฟุตบอลไปเริ่ม 14.00 น.'});
+  root.append(el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'ประกาศด่วนหน้าแรก'),el('div',{class:'form'},el('label',null,'ข้อความ (เว้นว่าง = ลบประกาศ)',nin),
+    el('div',{class:'actions'},el('button',{class:'btn pri',onclick:async()=>{try{await db.doc('public/notice').set({text:nin.value.trim(),by:st.teacher.name,ts:Date.now()});toast('บันทึกประกาศแล้ว');logAct('ประกาศ',nin.value.trim()||'(ลบประกาศ)')}catch(e){toast('บันทึกไม่สำเร็จ')}}},'ประกาศ')))));
+  root.append(el('div',{class:'panel help'},el('h3',{style:'margin-top:0'},'วิธีใช้'),el('ol',null,
+    el('li',null,'กรอกผล: แท็บ “ตารางแข่ง” เลือกวันและกีฬา แล้วกด “กรอกผล” ที่นัดนั้น (กรีฑาอยู่วันที่ 19 พ.ย. หรือแท็บ “กรีฑา”)'),
+    el('li',null,'คู่ชิงที่ 3 และชิงชนะเลิศเติมทีมให้เองเมื่อกรอกผลรอบคัดเลือกครบ ถ้ายังไม่ครบเลือกสีเองได้'),
+    el('li',null,'เช็คการเข้าร่วม: เลือกวัน รอบ สี และห้อง ติ๊กคนที่มา แล้วกด “บันทึก” ทีละห้อง'),
+    el('li',null,'ทุกการบันทึกเก็บชื่อครูและเวลาไว้ในประวัติด้านล่าง'))));
+  const n=bkkNow();const td=n.getFullYear()===2026&&n.getMonth()===10?n.getDate():(n>new Date(2026,10,30)?99:0);const nm=n.getHours()*60+n.getMinutes();
+  const pend=D.M.filter(m=>!(st.res[m.k]&&st.res[m.k].win)&&(td>m.d||(td===m.d&&nm>=m.e))).concat(D.A.filter(a=>!(st.res[a.k]&&st.res[a.k].ranks)&&(td>19||(td===19&&nm>=a.e))).map(a=>Object.assign({},a,{d:19,ath:true})));
+  if(pend.length){const p=el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'นัดที่หมดเวลาแล้วแต่ยังไม่มีผล ('+pend.length+')'));
+    pend.slice(0,15).forEach(m=>p.append(el('div',{class:'evrow'},el('div',{class:'nm'},(m.ath?m.ev:m.sp)+' ',el('small',null,(m.ath?m.g:m.c)+' · '+dayLabel(m.d)+' '+hm(m.s))),el('button',{class:'btn sm',onclick:()=>m.ath?openAth(D.A.find(x=>x.k===m.k)):openMatch(m)},'กรอกผล'))));
+    if(pend.length>15)p.append(el('p',{class:'note'},'และอีก '+(pend.length-15)+' นัด'));root.append(p)}
+  const lg=el('div',{class:'panel log'},el('h3',{style:'margin-top:0'},'ประวัติการบันทึกล่าสุด'));
+  if(!st.log.length)lg.append(el('p',{class:'note'},'ยังไม่มีประวัติ'));
+  st.log.slice(0,30).forEach(x=>lg.append(el('div',null,el('b',null,x.act+' '),x.text||'',el('br'),el('small',null,(x.by||'')+' · '+tstr(x.ts)))));
+  root.append(lg);
+  if(st.isAdmin){
+    const pts=st.cfg.points;const inp=pts.map((v,i)=>el('input',{type:'number',min:'0',id:'pt'+i,value:v,'aria-label':'คะแนนอันดับ '+(i+1)}));
+    root.append(el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'ตั้งค่า (เฉพาะแอดมิน)'),
+      el('div',{class:'form'},el('div',{style:'display:grid;grid-template-columns:repeat(4,1fr);gap:8px'},inp.map((x,i)=>el('label',null,'ที่ '+(i+1),x))),
+      el('div',{class:'actions'},el('button',{class:'btn',onclick:async()=>{const v=inp.map(x=>+x.value);if(v.some(n=>!(n>=0)))return toast('คะแนนต้องเป็นตัวเลข');try{await db.doc('config/points').set({points:v});toast('บันทึกคะแนนแล้ว');logAct('ตั้งค่า','คะแนนต่ออันดับ '+v.join('/'))}catch(e){toast('บันทึกไม่สำเร็จ')}}},'บันทึกคะแนนต่ออันดับ')),
+      )));
+    root.append(usersAdmin(),rosterAdmin());
+  }
+  if(st.isAdmin)root.append(rulesAdmin());
+  return root;
+}
+
+
+function wantCheckin(key){
+  if(!db||ckKey===key)return;ckKey=key;if(ckSub){ckSub();ckSub=null}st.checkin={};
+  const q=key==='all'?db.collection('checkin'):db.collection('checkin').where('d','==',+key.slice(1));
+  ckSub=q.onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());st.checkin=o;if(!(st.draft&&st.draft.dirty))render()},()=>{});
+}
+function usersAdmin(){
+  const box=el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'จัดการบัญชีครู'),el('p',{class:'note'},'ครูลงทะเบียนเองที่หน้านี้ แล้วแอดมินเลือกสิทธิ์ให้ “ครู” บันทึกผลและเช็คชื่อได้ “แอดมิน” ตั้งค่าระบบได้เพิ่ม'));
+  const list=el('div');box.append(list);
+  if(!st.users)list.append(el('p',{class:'note'},'กำลังโหลดรายชื่อบัญชี…'));
+  (st.users||[]).forEach(u=>{const r=(st.roles||{})[u.id];const sel=el('select',{'aria-label':'สิทธิ์ของ '+u.name},el('option',{value:''},'รออนุมัติ / ไม่มีสิทธิ์'),el('option',{value:'teacher'},'ครู'),el('option',{value:'admin'},'แอดมิน'));sel.value=r?r.role:'';
+    sel.addEventListener('change',async()=>{try{if(sel.value)await db.doc('roles/'+u.id).set({role:sel.value,name:u.name,email:u.email||''});else await db.doc('roles/'+u.id).delete();toast('บันทึกสิทธิ์ '+u.name+' แล้ว');logAct('ตั้งค่า','สิทธิ์ '+u.name+': '+(sel.value||'ยกเลิก'))}catch(e){toast('บันทึกไม่สำเร็จ')}});
+    list.append(el('div',{class:'evrow'},el('div',{class:'nm'},u.name,el('small',null,u.email||'')),sel))});
+  return box;
+}
+function rosterAdmin(){
+  const ta=el('textarea',{rows:'6',placeholder:'วางจาก Google Sheets 3 คอลัมน์: ชื่อ-สกุล | ห้อง (เช่น 1/1) | สี (เขียว ชมพู น้ำเงิน แดง)'});
+  const out=el('p',{class:'note'});
+  const parse=()=>{const R={};COLS.forEach(c=>R[c]=[]);let bad=0;ta.value.split(/\r?\n/).forEach(line=>{const p=line.split(/\t|,/).map(x=>x.trim()).filter(Boolean);if(p.length<3)return;const col=COLS.find(c=>p[2].includes(c));if(!col||!/^\d\/\d+$/.test(p[1])){bad++;return}R[col].push({n:p[0],c:p[1]})});return {R,bad}};
+  ta.addEventListener('input',()=>{const {R,bad}=parse();out.textContent=COLS.map(c=>'สี'+c+' '+R[c].length+' คน').join(' · ')+(bad?' · อ่านไม่ได้ '+bad+' แถว':'')});
+  return el('div',{class:'panel'},el('h3',{style:'margin-top:0'},'นำเข้ารายชื่อนักเรียน'),el('p',{class:'note'},'รายชื่อเก็บในฐานข้อมูล เปิดให้เฉพาะครูที่ได้รับสิทธิ์ ไม่ถูกเก็บใน GitHub ตอนนี้มี: '+COLS.map(c=>'สี'+c+' '+(st.roster[c]||[]).length).join(' · ')),ta,out,
+    el('div',{class:'actions'},el('button',{class:'btn pri',onclick:async e=>{const {R}=parse();const n=COLS.reduce((a,c)=>a+R[c].length,0);if(!n)return toast('ยังไม่มีรายชื่อที่อ่านได้');
+      await busy(e.currentTarget,async()=>{try{const b=db.batch();COLS.forEach(c=>{if(R[c].length)b.set(db.doc('roster/'+CODE[c]),{students:R[c],colour:c})});await b.commit();toast('นำเข้า '+n+' คนแล้ว');logAct('ตั้งค่า','นำเข้ารายชื่อ '+n+' คน');ta.value='';out.textContent=''}catch(x){toast('นำเข้าไม่สำเร็จ')}})}},'นำเข้า (แทนที่รายชื่อเดิมของสีที่มีข้อมูล)')));
+}
+
+/* ===== attendance: 2-19 Nov, weekdays, 2 sessions/day, per room ===== */
+const ADAYS=[2,3,4,5,6,9,10,11,12,13,16,17,18,19];
+const SESS=['เช้า','บ่าย'];
+const roomId=r=>'r'+r.replace('/','-');
+const ciId=(c,d,s,r)=>[CODE[c],d,s,roomId(r)].join('_');
+const isOff=d=>(st.attOff||[]).includes(d);
+function roomsOf(c){const m={};(st.roster[c]||[]).forEach((s,i)=>(m[s.c]=m[s.c]||[]).push(i));return m}
+function todayAtt(){const n=bkkNow();if(n.getFullYear()===2026&&n.getMonth()===10){const d=n.getDate();const f=ADAYS.filter(x=>x<=d);return f.length?f[f.length-1]:ADAYS[0]}return ADAYS[0]}
+function csvCopy(rows){const s=rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');
+  try{navigator.clipboard.writeText('﻿'+s).then(()=>toast('คัดลอกแล้ว วางใน Excel หรือ Google Sheets ได้'),()=>toast('คัดลอกไม่สำเร็จ'))}catch(e){toast('คัดลอกไม่สำเร็จ')}}
+function viewAtt(){
+  const root=el('div');root.append(el('h2',null,'เช็คการเข้าร่วมกิจกรรมสี'));
+  if(!st.teacher){root.append(el('div',{class:'empty'},'ต้องเข้าสู่ระบบครูก่อน ไปที่แท็บ “ครู / ผู้ดูแล”'),el('p',null,el('button',{class:'btn pri',onclick:()=>{st.tab='staff';render()}},'ไปหน้าเข้าสู่ระบบ')));return root}
+  if(!st.dbOn){root.append(el('div',{class:'banner'},'ยังไม่ได้เชื่อมต่อฐานข้อมูล'));return root}
+  if(!COLS.some(c=>(st.roster[c]||[]).length)){root.append(el('div',{class:'banner'},'ยังไม่เห็นรายชื่อนักเรียน (ต้องใช้บัญชีผู้ร่วมแก้ไข Contributor ขึ้นไป)'));return root}
+  const mode=st.attMode||'check';
+  root.append(el('div',{class:'chips',role:'group'},[['check','เช็คชื่อ'],['sum','สรุป']].map(([k,tx])=>el('button',{class:'chip','aria-pressed':mode===k,onclick:()=>{st.attMode=k;render()}},tx))));
+  return root.append(mode==='check'?attCheck():attSummary()),root;
+}
+async function saveAtt(dr){
+  try{await db.collection('checkin').doc(dr.id).set({d:dr.day,present:[...dr.present].sort((a,b)=>a-b),total:dr.total,by:st.teacher.name,ts:Date.now()});
+    dr.dirty=false;logAct('เช็คชื่อ','สี'+dr.c+' ม.'+dr.room+' '+dr.day+' พ.ย. รอบ'+SESS[dr.sess]+' มา '+dr.present.size+'/'+dr.total);return true}
+  catch(e){toast('บันทึกไม่สำเร็จ ตรวจสิทธิ์ผู้ร่วมแก้ไข');return false}
+}
+function attCheck(){
+  const root=el('div');
+  const day=st.attDay||todayAtt();wantCheckin('d'+day);const _x=0,sess=st.attSess!=null?st.attSess:(bkkNow().getHours()>=12?1:0);
+  const c=st.attCol||st.myCol||COLS[0];const rooms=roomsOf(c);const rk=Object.keys(rooms);
+  if(!rk.includes(st.attRoom))st.attRoom=rk[0];const room=st.attRoom;
+  const dayRow=el('div',{class:'chips dayrow scroll',role:'group','aria-label':'เลือกวัน'},ADAYS.map(d=>el('button',{class:'chip','aria-pressed':day===d,style:isOff(d)?'opacity:.5':null,onclick:()=>go(()=>{st.attDay=d})},dayLabel(d)+(isOff(d)?' (งด)':''))));
+  root.append(dayRow);
+  requestAnimationFrame(()=>{const s=dayRow.querySelector('[aria-pressed="true"]');if(s)dayRow.scrollLeft=s.offsetLeft-dayRow.clientWidth/2+s.clientWidth/2});
+  root.append(el('div',{class:'chips',role:'group','aria-label':'รอบ'},SESS.map((x,i)=>el('button',{class:'chip','aria-pressed':sess===i,onclick:()=>go(()=>{st.attSess=i})},'รอบ'+x))));
+  // overview of all colours for this day+session
+  root.append(el('div',{class:'ovw'},COLS.map(x=>{const R=roomsOf(x);const ks=Object.keys(R);let done=0,pre=0,tot=0;ks.forEach(r=>{const k=st.checkin[ciId(x,day,sess,r)];if(k){done++;pre+=k.present.length;tot+=R[r].length}});
+    return el('div',{style:'--cc:var(--c-'+x+')'},'สี'+x,el('b',null,tot?pre+'/'+tot:'—'),'เช็คแล้ว '+done+'/'+ks.length+' ห้อง')})));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกสี'},COLS.map(x=>el('button',{class:'chip','aria-pressed':c===x,onclick:()=>go(()=>{st.attCol=x;st.attRoom=null;lsSet('chor37.col',x)})},colDot(x),'สี'+x))));
+  if(st.isAdmin)root.append(el('p',null,el('button',{class:'btn sm',onclick:async()=>{const off=new Set(st.attOff||[]);off.has(day)?off.delete(day):off.add(day);try{await db.doc('config/attdays').set({off:[...off].sort((a,b)=>a-b)});toast(off.has(day)?'ตั้งเป็นวันงดกิจกรรม':'ยกเลิกวันงดกิจกรรม');logAct('ตั้งค่า',(off.has(day)?'งดกิจกรรม ':'ยกเลิกงดกิจกรรม ')+day+' พ.ย.')}catch(e){toast('บันทึกไม่สำเร็จ')}}},isOff(day)?'ยกเลิกวันงดกิจกรรม':'ตั้งวันนี้เป็นวันงดกิจกรรม')));
+  if(isOff(day))root.append(el('div',{class:'banner'},'วันนี้เป็นวันงดกิจกรรม ไม่นับในสรุป (ยังบันทึกได้ถ้าจำเป็น)'));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกห้อง'},rk.map(r=>{const k=st.checkin[ciId(c,day,sess,r)];return el('button',{class:'chip','aria-pressed':room===r,onclick:()=>go(()=>{st.attRoom=r})},'ม.'+r+' ',el('small',null,k?'✓ '+k.present.length+'/'+rooms[r].length:'ยังไม่เช็ค'))})));
+  const id=ciId(c,day,sess,room);const roster=st.roster[c];const idx=rooms[room]||[];
+  if(!st.draft||st.draft.id!==id){const k=st.checkin[id];st.draft={id,c,day,sess,room,total:idx.length,present:new Set(k&&k.present||[]),dirty:false}}
+  const dr=st.draft;const k=st.checkin[id];
+  const cnt=el('b');const flag=el('span',{class:'badge now'},'ยังไม่บันทึก');
+  const upd=()=>{cnt.textContent=dr.present.size+' / '+idx.length;flag.style.display=dr.dirty||!k?'':'none';flag.textContent=k?'ยังไม่บันทึก':'ห้องนี้ยังไม่เช็ค'};
+  const box=el('div');
+  function draw(){box.replaceChildren();idx.forEach(i=>{const s=roster[i];const on=dr.present.has(i);const cb=el('input',{type:'checkbox',id:'p'+i});cb.checked=on;
+    const row=el('label',{for:'p'+i,class:'att-row'+(on?'':' off')},cb,el('span',{style:'flex:1'},s.n),el('small',{class:'note',style:'margin:0'},on?'มา':'ไม่มา'));
+    cb.addEventListener('change',()=>{cb.checked?dr.present.add(i):dr.present.delete(i);dr.dirty=true;row.className='att-row'+(cb.checked?'':' off');row.lastChild.textContent=cb.checked?'มา':'ไม่มา';upd()});
+    box.append(row)})}
+  draw();upd();
+  root.append(el('div',{class:'tb-h'},colDot(c),'ม.'+room+' · '+dayLabel(day)+' รอบ'+SESS[sess]),
+    el('div',{class:'tools'},el('button',{class:'btn sm',onclick:()=>{idx.forEach(i=>dr.present.add(i));dr.dirty=true;draw();upd()}},'มาครบทั้งห้อง'),el('button',{class:'btn sm',onclick:()=>{idx.forEach(i=>dr.present.delete(i));dr.dirty=true;draw();upd()}},'ล้างทั้งหมด')),
+    box,
+    el('p',{class:'note'},k&&k.by?'บันทึกล่าสุดโดย '+k.by+' · '+tstr(k.ts):''),
+    el('div',{class:'stick'},el('span',null,'มา ',cnt,' คน'),flag,el('span',{style:'flex:1'}),
+      el('button',{class:'btn ok',onclick:async e=>{if(await busy(e.currentTarget,()=>saveAtt(dr))){const nx=rk[rk.indexOf(room)+1];toast(nx?'บันทึก ม.'+room+' แล้ว ไปห้อง ม.'+nx:'บันทึกแล้ว ครบทุกห้องของสี'+c);if(nx)st.attRoom=nx;render();window.scrollTo({top:0})}}},'บันทึก'+(rk.indexOf(room)<rk.length-1?' แล้วไปห้องถัดไป':''))));
+  return root;
+}
+function attStats(){
+  // per colour: present/possible person-sessions; per day-sess; per student
+  const S={};COLS.forEach(c=>S[c]={c,pres:0,poss:0,rooms:0,roomsDone:0,stu:{}});
+  const byDay={};
+  COLS.forEach(c=>{const rooms=roomsOf(c);ADAYS.filter(d=>!isOff(d)).forEach(d=>SESS.forEach((_,s)=>Object.keys(rooms).forEach(r=>{
+    S[c].rooms++;const k=st.checkin[ciId(c,d,s,r)];const key=d+'_'+s;const bd=(byDay[key]=byDay[key]||{});const x=(bd[c]=bd[c]||{pres:0,poss:0,rooms:0,done:0});x.rooms++;
+    if(!k)return;S[c].roomsDone++;x.done++;const P=new Set(k.present);
+    rooms[r].forEach(i=>{S[c].poss++;x.poss++;const u=(S[c].stu[i]=S[c].stu[i]||{p:0,t:0});u.t++;if(P.has(i)){S[c].pres++;x.pres++;u.p++}});
+  })))});
+  return {S,byDay};
+}
+function attSummary(){
+  wantCheckin('all');
+  const root=el('div');const {S,byDay}=attStats();
+  const pct=(a,b)=>b?Math.round(a*100/b)+'%':'—';
+  root.append(el('h3',null,'คะแนนการเข้าร่วม (ยังไม่รวมในคะแนนสี)'));
+  const rows=COLS.map(c=>S[c]).sort((a,b)=>b.pres-a.pres);
+  const tb=el('table',{class:'pt'},el('thead',null,el('tr',null,['สี','คะแนนเข้าร่วม (คน-รอบที่มา)','เปอร์เซ็นต์','ห้องที่เช็คแล้ว'].map(x=>el('th',null,x)))),
+    el('tbody',null,rows.map(r=>el('tr',null,el('td',null,colDot(r.c),' สี'+r.c),el('td',null,el('b',null,r.pres),' / '+r.poss),el('td',null,pct(r.pres,r.poss)),el('td',null,r.roomsDone+' / '+r.rooms)))));
+  root.append(el('div',{style:'overflow-x:auto'},tb),el('p',{class:'note'},'1 คะแนนต่อ 1 คนที่มาในแต่ละรอบ (เช้า/บ่าย) นับเฉพาะวันที่มีกิจกรรมและห้องที่เช็คแล้ว ตอนนี้แสดงแยกไว้ ไม่นำไปรวมเป็นคะแนนสีในหน้า “คะแนนสี”'));
+  // per day
+  root.append(el('h3',null,'รายวัน (มา / ทั้งหมด ในห้องที่เช็คแล้ว)'));
+  const dt=el('table',{class:'pt'},el('thead',null,el('tr',null,el('th',null,'วัน'),el('th',null,'รอบ'),COLS.map(c=>el('th',null,colDot(c),' '+c)))),
+    el('tbody',null,ADAYS.filter(d=>!isOff(d)).flatMap(d=>SESS.map((sn,s)=>{const bd=byDay[d+'_'+s]||{};return el('tr',null,el('td',null,s===0?dayLabel(d):''),el('td',null,sn),COLS.map(c=>{const x=bd[c];return el('td',null,!x||!x.done?el('span',{class:'note',style:'margin:0'},'ยังไม่เช็ค'):x.pres+'/'+x.poss+(x.done<x.rooms?' *':''))}))}))));
+  root.append(el('div',{style:'overflow-x:auto'},dt),el('p',{class:'note'},'* เช็คแล้วบางห้อง'));
+  // per student
+  const c=st.attCol||st.myCol||COLS[0];
+  root.append(el('h3',null,'รายบุคคล'),el('div',{class:'chips',role:'group'},COLS.map(x=>el('button',{class:'chip','aria-pressed':c===x,onclick:()=>{st.attCol=x;render()}},colDot(x),'สี'+x))));
+  const ros=st.roster[c]||[];const stu=S[c].stu;
+  const list=ros.map((s,i)=>({s,i,u:stu[i]||{p:0,t:0}})).sort((a,b)=>(a.u.t?a.u.p/a.u.t:2)-(b.u.t?b.u.p/b.u.t:2)||a.i-b.i);
+  root.append(el('div',{class:'tools'},el('button',{class:'btn sm',onclick:()=>csvCopy([['สี','ชั้น','ชื่อ','มา (รอบ)','ทั้งหมด (รอบ)','เปอร์เซ็นต์'],...ros.map((s,i)=>{const u=stu[i]||{p:0,t:0};return [c,s.c,s.n,u.p,u.t,u.t?Math.round(u.p*100/u.t):'']})])},'คัดลอกเป็นตาราง (CSV) สี'+c),
+    el('button',{class:'btn sm',onclick:()=>{const ds=ADAYS.filter(d=>!isOff(d));const head=['สี','ชั้น','ชื่อ',...ds.flatMap(d=>SESS.map(s=>d+' พ.ย. '+s)),'มา','ทั้งหมด','%'];const rows=[head];
+      COLS.forEach(x=>(st.roster[x]||[]).forEach((s,i)=>{let p=0,tt=0;const cells=ds.flatMap(d=>SESS.map((_,si)=>{const k=st.checkin[ciId(x,d,si,s.c)];if(!k)return '';tt++;const y=k.present.includes(i);if(y)p++;return y?1:0}));rows.push([x,s.c,s.n,...cells,p,tt,tt?Math.round(p*100/tt):''])}));csvCopy(rows)}},'คัดลอกทุกสีทุกวัน (CSV)'),
+    el('button',{class:'btn sm',onclick:()=>csvCopy([['สี','คะแนนเข้าร่วม','ทั้งหมด','เปอร์เซ็นต์'],...COLS.map(x=>[x,S[x].pres,S[x].poss,S[x].poss?Math.round(S[x].pres*100/S[x].poss):''])])},'คัดลอกสรุปรายสี')));
+  list.slice(0,60).forEach(({s,u})=>root.append(el('div',{style:'display:flex;justify-content:space-between;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line)'},el('span',null,s.n,el('span',{class:'note',style:'margin-left:8px'},'ม.'+s.c)),el('span',{class:'badge'+(u.t&&u.p===u.t?' done':'')},u.t?u.p+'/'+u.t+' รอบ':'ยังไม่เช็ค'))));
+  if(list.length>60)root.append(el('p',{class:'note'},'แสดง 60 คนแรก (ขาดมากที่สุดก่อน) ดูทั้งหมดได้จากปุ่มคัดลอกตาราง'));
+  return root;
+}
+
+/* ===== my colour ===== */
+function viewMine(){
+  const root=el('div');
+  const c=st.myCol;
+  root.append(el('h2',null,'สีของฉัน'));
+  root.append(el('div',{class:'chips',role:'group','aria-label':'เลือกสี'},COLS.map(x=>el('button',{class:'chip','aria-pressed':c===x,onclick:()=>{st.myCol=x;lsSet('chor37.col',x);render()}},colDot(x),'สี'+x))));
+  if(!c){root.append(el('div',{class:'empty'},'เลือกสีของคุณเพื่อดูนัดถัดไปและผลของสีนั้น'));return root}
+  const s=standings();const rank=s.findIndex(x=>x.c===c)+1;const me=s[rank-1];
+  root.append(el('div',{class:'panel',style:'border-left:8px solid var(--c-'+c+')'},el('div',{class:'vs',style:'font-size:22px'},'สี'+c),
+    el('div',{class:'meta',style:'font-size:15px'},me.pts>0?el('span',null,'อันดับที่ ',el('b',null,rank),' · ',el('b',null,me.pts),' คะแนน · ที่ 1: '+me.pl[0]+' · ที่ 2: '+me.pl[1]+' · ที่ 3: '+me.pl[2]):el('span',null,'ยังไม่มีผลที่บันทึก'))));
+  const now=bkkNow();const nowD=(now.getFullYear()===2026&&now.getMonth()===10)?now.getDate():(now<new Date(2026,10,1)?0:99);const nowM=now.getHours()*60+now.getMinutes();
+  const all=[];
+  D.M.forEach(m=>{const tm=teams(m);const r=st.res[m.k];
+    if(tm.t.includes(c))all.push({m,r,kind:'play'});
+    else if(m.st!=='S'&&!tm.known&&m.pre.some(n=>{const sm=byTN[m.t+'-'+n];return sm.cols.includes(c)&&!(st.res[sm.k]&&st.res[sm.k].win)}))all.push({m,r:null,kind:'maybe'})});
+  const upcoming=all.filter(x=>!(x.r&&x.r.win)&&(x.m.d>nowD||(x.m.d===nowD&&x.m.e>nowM))).sort((a,b)=>a.m.d-b.m.d||a.m.s-b.m.s);
+  const done=all.filter(x=>x.r&&x.r.win).sort((a,b)=>b.m.d-a.m.d||b.m.s-a.m.s);
+  root.append(el('h3',null,'นัดถัดไป'));
+  if(!upcoming.length)root.append(el('div',{class:'empty'},'ไม่มีนัดที่รอแข่ง'));
+  upcoming.slice(0,5).forEach(x=>{const m=x.m;const tm=teams(m);const opp=m.st==='S'?m.cols.find(y=>y!==c):null;
+    let left='';if(m.d===nowD){const d=m.s-nowM;left=d>0?(d>=60?'อีก '+Math.floor(d/60)+' ชม. '+(d%60)+' นาที':'อีก '+d+' นาที'):'กำลังแข่ง/ถึงเวลาแล้ว'}
+    root.append(el('div',{class:'card'},el('div',{class:'tm'},hm(m.s),el('small',null,dayLabel(m.d))),
+      el('div',null,el('div',{class:'vs',style:'font-size:17px'},m.sp+' · '+m.c),
+        el('div',{class:'meta'},x.kind==='maybe'?el('span',{class:'rd'},(m.st==='F'?'ถ้าเข้าชิงชนะเลิศ':'ถ้าได้ชิงอันดับ 3')+' (รอผลรอบคัดเลือก)'):el('span',{class:'rd'},m.st==='S'?'รอบคัดเลือก พบสี'+opp:m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ'),el('span',null,m.v))),
+      el('div',{class:'side'},left?el('span',{class:'badge now'},left):null)));
+  });
+  if(c&&nowD<=19){const ar=D.A.filter(a=>true);const nxt=ar.filter(a=>19>nowD||(19===nowD&&a.e>nowM));
+    if(nxt.length&&(nowD<=19))root.append(el('p',{class:'note'},'กรีฑาวันที่ 19 พ.ย. สี'+c+' ลงวิ่งทุกรายการ ช่องวิ่งดูที่แท็บ “กรีฑา”'))}
+  root.append(el('h3',null,'ผลล่าสุด'));
+  if(!done.length)root.append(el('div',{class:'empty'},'ยังไม่มีผลการแข่งขันของสีนี้'));
+  done.slice(0,8).forEach(x=>{const m=x.m,r=x.r;const win=r.win===c;const tm=teams(m).t;const opp=tm.find(y=>y!==c);
+    root.append(el('div',{class:'card'},el('div',{class:'tm'},hm(m.s),el('small',null,dayLabel(m.d))),
+      el('div',null,el('div',{class:'vs',style:'font-size:17px'},m.sp+' · '+m.c),el('div',{class:'meta'},el('span',{class:'rd'},(m.st==='S'?'รอบคัดเลือก':m.st==='T'?'ชิงอันดับ 3':'ชิงชนะเลิศ')+' พบสี'+opp),r.sa!=null?el('span',null,'คะแนน '+(tm[0]===c?r.sa+'-'+r.sb:r.sb+'-'+r.sa)):null)),
+      el('div',{class:'side'},el('span',{class:'badge '+(win?'done':'')},win?'ชนะ':'แพ้'))))});
+  const ath=D.A.filter(a=>st.res[a.k]&&st.res[a.k].ranks);
+  if(ath.length){root.append(el('h3',null,'กรีฑา'));ath.slice(-6).forEach(a=>root.append(el('div',{class:'evrow',style:'border:1px solid var(--line);border-radius:8px;margin-bottom:6px;background:var(--surface)'},el('div',{class:'nm'},a.ev,el('small',null,a.g)),el('span',{class:'badge done'},'อันดับ '+st.res[a.k].ranks[c]))))}
+  root.append(el('div',{class:'tools',style:'margin-top:14px'},el('button',{class:'btn',onclick:()=>{st.col=c;st.sport='all';st.tab='sched';render()}},'ดูตารางทั้งหมดของสี'+c)));
+  return root;
+}
+
+/* ===== big-screen dashboard ===== */
+function dashData(){
+  const n=bkkNow();const td=n.getFullYear()===2026&&n.getMonth()===10?n.getDate():0;const m=n.getHours()*60+n.getMinutes();
+  const items=[...D.M.map(x=>({d:x.d,s:x.s,e:x.e,sp:x.sp,c:x.c,st:x.st,tm:teams(x).t,r:st.res[x.k],lv:st.live[x.k],ath:false})),...D.A.map(a=>({d:19,s:a.s,e:a.e,sp:a.ev,c:a.g,st:'A',tm:[],r:st.res[a.k],ath:true}))];
+  const isDone=x=>x.r&&(x.r.win||x.r.ranks);
+  const now=items.filter(x=>!isDone(x)&&(x.lv||(x.d===td&&x.s<=m&&m<x.e))).sort((a,b)=>a.d-b.d||a.s-b.s);
+  let nxt;
+  nxt=items.filter(x=>!isDone(x)&&!x.lv&&(x.d>td||(x.d===td&&x.s>m))).sort((a,b)=>a.d-b.d||a.s-b.s);
+  const recent=items.filter(isDone).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));
+  return {now,nxt,recent,td};
+}
+function dzRow(x,showDay){
+  const rd=x.ath?'กรีฑา':x.st==='S'?'รอบคัดเลือก':x.st==='T'?'ชิงที่ 3':'ชิงชนะเลิศ';
+  let right;
+  if(x.ath){right=x.r&&x.r.ranks?Object.entries(x.r.ranks).sort((a,b)=>a[1]-b[1]).slice(0,3).map(([c,p])=>el('span',null,p+'.',el('i',{class:'dz-dot',style:'--cc:var(--c-'+c+')'}),c)):[el('span',{style:'color:#93a3bb'},'ทุกสี')]}
+  else right=[0,1].flatMap(i=>{const c=x.tm[i];const w=x.r&&x.r.win===c;const sv=x.r&&x.r.sa!=null?x.r:(!x.r&&x.lv?x.lv:null);const part=c?el('span',{class:w?'w':''},el('i',{class:'dz-dot',style:'--cc:var(--c-'+c+')'}),' '+c+(sv?' '+(i?sv.sb:sv.sa):'')):el('span',{style:'color:#93a3bb'},'รอผล');return i?[el('span',{style:'color:#93a3bb'},'–'),part]:[part]});
+  return el('div',{class:'dz-row'},el('span',{class:'tm'},(showDay?x.d+' พ.ย. ':'')+hm(x.s)),el('span',{class:'sp'},x.sp,el('small',null,x.c+' · '+rd+(!x.r&&x.lv&&x.lv.txt?' · '+x.lv.txt:''))),el('span',{class:'vs'},right));
+}
+function renderDash(){
+  const box=$('#dash');if(!st.dash){box.classList.remove('on');return}
+  box.classList.add('on');
+  const s=standings();const top=s[0].pts>0?s[0].pts:-1;const pg=progress();const dd=dashData();
+  const n=bkkNow();
+  const clock=el('div',{class:'dz-clock',id:'dzclock'},hm(n.getHours()*60+n.getMinutes()).replace('.',':'),el('small',null,DOW[n.getDay()]+' '+n.getDate()+' '+['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][n.getMonth()]+' '+(n.getFullYear()+543)));
+  const teamsBox=el('div',{class:'dz-teams'},COLS.map(c=>{const x=s.find(y=>y.c===c);const rk=s.findIndex(y=>y.c===c)+1;
+    return el('div',{class:'dz-t'+(x.pts===top?' lead':''),style:'--cc:var(--c-'+c+')'},el('div',{class:'rk'},top>0?'อันดับ '+rk:' '),el('div',{class:'nm'},'สี'+c),el('div',{class:'pt'},x.pts),
+      el('div',{class:'md'},el('span',null,el('i',{class:'medal mg'}),'ที่ 1 × '+x.pl[0]),el('span',null,el('i',{class:'medal ms'}),'ที่ 2 × '+x.pl[1]),el('span',null,el('i',{class:'medal mb'}),'ที่ 3 × '+x.pl[2])))}));
+  const nowList=el('div',{class:'dz-list'});
+  if(dd.now.length)dd.now.slice(0,6).forEach(x=>nowList.append(dzRow(x,false)));
+  const nextTitle=dd.now.length?'ถัดไป':'นัดถัดไป';
+  const nx=dd.nxt.slice(0,dd.now.length?3:6);
+  const nextList=el('div',{class:'dz-list'},nx.length?nx.map(x=>dzRow(x,x.d!==dd.td)):el('div',{class:'dz-empty'},'ไม่มีนัดที่รอแข่ง'));
+  const recList=el('div',{class:'dz-list'},dd.recent.length?dd.recent.slice(0,6).map(x=>dzRow(x,true)):el('div',{class:'dz-empty'},'ยังไม่มีผลการแข่งขัน'));
+  const left=el('div',{style:'display:grid;gap:clamp(10px,1.4vw,22px);align-content:start'},
+    el('div',{class:'dz-box'},el('h2',null,'คะแนนรวม'),teamsBox,el('div',{class:'dz-bar'},el('i',{style:'width:'+(pg.all?pg.done*100/pg.all:0)+'%'})),el('div',{style:'color:#93a3bb;margin-top:6px;font-size:clamp(12px,1vw,16px)'},'แข่งจบแล้ว '+pg.done+' จาก '+pg.all+' รายการ')),
+    el('div',{class:'dz-box'},el('h2',null,'ผลล่าสุด'),recList));
+  const right=el('div',{style:'display:grid;gap:clamp(10px,1.4vw,22px);align-content:start'},
+    dd.now.length?el('div',{class:'dz-box',style:'border-color:#ffd470'},el('h2',null,el('span',{class:'pulse',style:'width:12px;height:12px;border-radius:50%;background:#ff5a5a;display:inline-block'}),'กำลังแข่ง'),nowList):null,
+    el('div',{class:'dz-box'},el('h2',null,nextTitle),nextList));
+  box.replaceChildren(...[
+    el('div',{class:'dz-top'},el('div',{class:'dz-brand'},el('img',{class:'dz-crest',src:LOGO,alt:''}),el('div',null,el('h1',null,'ช่อชัยพฤกษ์เกมส์ ครั้งที่ 37'),el('div',{class:'sub'},'โรงเรียนมัธยมพัชรกิติยาภา ๒ กำแพงเพชร · ผลการแข่งขันสด'))),clock),
+    el('div',{class:'dz-grid'},left,right),
+    st.notice?el('div',{class:'dz-note',role:'status'},'ประกาศ: '+st.notice):null,
+    el('div',{class:'dz-foot'},el('span',null,st.dbOn?'อัปเดตอัตโนมัติเมื่อครูบันทึกผล':'ยังไม่ได้เชื่อมต่อฐานข้อมูล'),
+      el('span',{style:'display:flex;gap:8px'},el('button',{type:'button',onclick:()=>{const d=document.documentElement;try{(document.fullscreenElement?document.exitFullscreen():d.requestFullscreen()).catch(()=>toast('เบราว์เซอร์ไม่อนุญาตเต็มจอ กด F11 แทน'))}catch(e){toast('กด F11 เพื่อเต็มจอ')}}},'เต็มจอ'),
+        el('button',{type:'button',id:'dzclose',onclick:()=>{st.dash=false;try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}render();$('#dashbtn').focus()}},'ปิดจอแสดงผล')))].filter(Boolean));
+}
+function render(){
+  if(TEACHER_TABS.includes(st.tab)&&!st.teacher)st.tab='staff';
+  renderScore();renderTabs();renderDash();if(st.dash)return;
+  const m=$('#main');const v=st.tab==='sched'?viewSched():st.tab==='mine'?viewMine():st.tab==='stand'?viewStand():st.tab==='ath'?viewAth():st.tab==='att'?viewAtt():st.tab==='field'?viewField():viewStaff();
+  const keep=document.activeElement&&document.activeElement.id;
+  m.replaceChildren(v);
+  if(keep){const e=document.getElementById(keep);if(e&&e.tagName!=='BUTTON')e.focus()}
+  const lt=Object.values(st.res).reduce((a,r)=>Math.max(a,r.ts||0),0);
+  $('#foot').textContent=(st.dbOn?'ผลอัปเดตสด'+(lt?' · บันทึกล่าสุด '+tstr(lt):''):'ยังไม่ได้เชื่อมต่อฐานข้อมูล')+' · คะแนนสีคำนวณอัตโนมัติ · เวลาพิธีเปิด พิธีปิด และกีฬาไทยเป็นเวลาโดยประมาณ';
+}
+
+/* boot */
+(function pickDay(){
+  const n=bkkNow();let d=D.days[0];
+  if(n.getFullYear()===2026&&n.getMonth()===10){d=D.days.find(x=>x>=n.getDate())||D.days[D.days.length-1]}
+  else if(n.getFullYear()>2026||(n.getFullYear()===2026&&n.getMonth()>10))d=D.days[D.days.length-1];
+  st.day=d;
+})();
+st.fVen=lsGet('chor37.ven');st.myCol=lsGet('chor37.col');if(!COLS.includes(st.myCol))st.myCol=null;
+$('#dashbtn').addEventListener('click',()=>{st.dash=true;render();const c=$('#dzclose');if(c)c.focus()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&st.dash&&!$('#layer').children.length){st.dash=false;render()}});
+try{if(new URLSearchParams(location.search).get('screen')==='1')st.dash=true}catch(e){}
+setInterval(()=>{if(st.dash){const c=$('#dzclock');const n=bkkNow();if(c&&c.firstChild)c.firstChild.textContent=hm(n.getHours()*60+n.getMinutes()).replace('.',':')}},5000);
+render();
+setInterval(()=>{const a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='SELECT'||a.tagName==='TEXTAREA'))return;if($('#layer').children.length)return;render()},60000);
+window.addEventListener('beforeunload',e=>{if(st.draft&&st.draft.dirty){e.preventDefault();e.returnValue=''}});
+(function start(){
+  const cfg=window.FIREBASE_CONFIG;
+  if(!window.firebase||!cfg||!cfg.apiKey||/ใส่|YOUR/.test(cfg.apiKey)){st.cfgMissing=true;st.loaded=true;render();return}
+  firebase.initializeApp(cfg);db=firebase.firestore();auth=firebase.auth();st.dbOn=true;
+  const fail=()=>{st.dbOn=false;st.loaded=true;render()};
+  db.doc('public/results').onSnapshot(s=>{st.res=s.exists?s.data()||{}:{};st.loaded=true;st.dbOn=true;render()},fail);
+  db.doc('public/notice').onSnapshot(s=>{const d=s.exists&&s.data();st.notice=d&&d.text||'';render()},()=>{});
+  db.doc('config/rules').onSnapshot(s=>{const d=s.exists&&s.data();st.rules=d||{};render()},()=>{});
+  db.doc('config/points').onSnapshot(s=>{const d=s.exists&&s.data();if(d&&Array.isArray(d.points)&&d.points.length===4)st.cfg.points=d.points;render()},()=>{});
+  db.doc('config/attdays').onSnapshot(s=>{const d=s.exists&&s.data();st.attOff=d&&Array.isArray(d.off)?d.off:[];render()},()=>{});
+  db.collection('live').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());for(const k in liveTimers){if(st.live[k]&&!o[k])o[k]=st.live[k]}st.live=o;render()},()=>{});
+  let roleSub=null;
+  auth.onAuthStateChanged(u=>{
+    st.user=u;st.roleLoaded=false;if(roleSub){roleSub();roleSub=null}stopTeacher();st.teacher=null;st.isAdmin=false;
+    if(!u){render();return}
+    roleSub=db.doc('roles/'+u.uid).onSnapshot(s=>{st.roleLoaded=true;const r=s.exists&&s.data();
+      if(r&&(r.role==='teacher'||r.role==='admin')){const was=!!st.teacher;st.teacher={name:r.name||u.email};st.isAdmin=r.role==='admin';if(!was||st._adm!==st.isAdmin){st._adm=st.isAdmin;startTeacher();toast('เข้าสู่ระบบแล้ว: '+st.teacher.name)}}
+      else{st.teacher=null;st.isAdmin=false;stopTeacher()}render()},()=>{st.roleLoaded=true;render()});
+    render();
+  });
+})();
+function startTeacher(){
+  stopTeacher();
+  teacherSubs.push(db.collection('log').orderBy('ts','desc').limit(40).onSnapshot(s=>{st.log=s.docs.map(d=>d.data());if(st.tab==='staff')render()},()=>{}));
+  COLS.forEach(c=>teacherSubs.push(db.doc('roster/'+CODE[c]).onSnapshot(s=>{const d=s.exists&&s.data();st.roster[c]=d&&d.students||[];render()},()=>{})));
+  if(st.isAdmin){
+    teacherSubs.push(db.collection('users').onSnapshot(s=>{st.users=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(a.ts||0)-(b.ts||0));if(st.tab==='staff')render()},()=>{}));
+    teacherSubs.push(db.collection('roles').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());st.roles=o;if(st.tab==='staff')render()},()=>{}));
+  }
+}
+function stopTeacher(){teacherSubs.forEach(f=>{try{f()}catch(e){}});teacherSubs=[];if(ckSub){ckSub();ckSub=null}ckKey=null;st.roster={};st.checkin={};st.log=[];st.users=null;st.roles=null}
+})();
+</script>
+
+</html>

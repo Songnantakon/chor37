@@ -1,0 +1,45 @@
+rules_version = '2';
+// กฎความปลอดภัย ช่อชัยพฤกษ์เกมส์ 37
+// - ทุกคนอ่านผลแข่ง คะแนนสด ประกาศ และค่าตั้งได้ (ไม่ต้องล็อกอิน)
+// - ครูที่แอดมินอนุมัติ (มีเอกสาร roles/{uid}) บันทึกผล คะแนนสด เช็คชื่อได้
+// - รายชื่อนักเรียนอ่านได้เฉพาะครู แก้ได้เฉพาะแอดมิน
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function roleDoc() { return get(/databases/$(database)/documents/roles/$(request.auth.uid)); }
+    function isTeacher() { return signedIn() && exists(/databases/$(database)/documents/roles/$(request.auth.uid)); }
+    function isAdmin() { return isTeacher() && roleDoc().data.role == 'admin'; }
+
+    match /public/{docId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+    match /live/{matchId} {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /roster/{colour} {
+      allow read: if isTeacher();
+      allow write: if isAdmin();
+    }
+    match /checkin/{docId} {
+      allow read, write: if isTeacher();
+    }
+    match /log/{docId} {
+      allow read: if isTeacher();
+      allow create: if isTeacher();
+    }
+    match /users/{uid} {
+      allow create, update: if signedIn() && request.auth.uid == uid;
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+    }
+    match /roles/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}
