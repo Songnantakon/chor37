@@ -608,7 +608,7 @@ const liveTimers={};
 function bump(m,i,d){
   const cur=Object.assign({sa:0,sb:0},st.live[m.k]||{});const k=i?'sb':'sa';cur[k]=Math.max(0,(cur[k]||0)+d);
   cur.by=st.teacher.name;cur.ts=Date.now();st.live[m.k]=cur;render();
-  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(st.live[m.k]).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
+  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(fsEnc(st.live[m.k])).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
 }
 function resetLive(m){delete st.live[m.k];render();db.collection('live').doc(m.k).delete().catch(()=>{})}
 function viewField(){
@@ -688,7 +688,7 @@ function commitLive(m,L,msg){
   const R=ruleOf(m.sp);R._sp=m.sp;const S=liveSum(R,L);
   const doc=Object.assign({},L,{sa:S.sa,sb:S.sb,txt:S.txt,note:S.note,win:S.win,done:S.done,by:st.teacher.name,ts:Date.now()});
   st.live[m.k]=doc;render();if(msg)toast(msg);
-  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(st.live[m.k]).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
+  clearTimeout(liveTimers[m.k]);liveTimers[m.k]=setTimeout(()=>{db.collection('live').doc(m.k).set(fsEnc(st.live[m.k])).catch(()=>toast('ส่งคะแนนสดไม่สำเร็จ ตรวจอินเทอร์เน็ต'))},350);
 }
 function act(m,fn){
   const R=ruleOf(m.sp);R._sp=m.sp;const cur=st.live[m.k];
@@ -876,7 +876,7 @@ function descRes(k,b){if(b.ranks)return Object.entries(b.ranks).sort((x,y)=>x[1]
 function lastBy(r){return r&&r.by?el('p',{class:'note'},'บันทึกล่าสุดโดย '+r.by+(r.ts?' · '+tstr(r.ts):'')):null}
 async function save(key,body,okMsg){
   if(!db)return toast('ยังไม่ได้เชื่อมต่อฐานข้อมูล');
-  const doc=Object.assign({},body,{by:st.teacher.name,ts:Date.now()});
+  const doc=fsEnc(Object.assign({},body,{by:st.teacher.name,ts:Date.now()}));
   try{const ref=db.doc('public/results');try{await ref.update(new firebase.firestore.FieldPath(key),doc)}catch(e1){if(e1&&e1.code==='not-found')await ref.set({[key]:doc},{merge:true});else throw e1}toast(okMsg||'บันทึกแล้ว');logAct('ผล',descKey(key)+': '+descRes(key,body));return true}catch(e){toast('บันทึกไม่สำเร็จ: '+(e&&e.code==='permission-denied'?'บัญชีนี้ยังไม่มีสิทธิ์บันทึก':'ลองใหม่อีกครั้ง'));return false}
 }
 async function clearRes(key){
@@ -1045,7 +1045,7 @@ function viewAtt(){
   const root=el('div');root.append(el('h2',null,'เช็คการเข้าร่วมกิจกรรมสี'));
   if(!st.teacher){root.append(el('div',{class:'empty'},'ต้องเข้าสู่ระบบครูก่อน ไปที่แท็บ “ครู / ผู้ดูแล”'),el('p',null,el('button',{class:'btn pri',onclick:()=>{st.tab='staff';render()}},'ไปหน้าเข้าสู่ระบบ')));return root}
   if(!st.dbOn){root.append(el('div',{class:'banner'},'ยังไม่ได้เชื่อมต่อฐานข้อมูล'));return root}
-  if(!COLS.some(c=>(st.roster[c]||[]).length)){root.append(el('div',{class:'banner'},'ยังไม่เห็นรายชื่อนักเรียน (ต้องใช้บัญชีผู้ร่วมแก้ไข Contributor ขึ้นไป)'));return root}
+  if(!COLS.some(c=>(st.roster[c]||[]).length)){root.append(el('div',{class:'banner'},'ยังไม่มีรายชื่อนักเรียน ให้แอดมินนำเข้าที่แท็บ ครู / ผู้ดูแล > นำเข้ารายชื่อนักเรียน'));return root}
   const mode=st.attMode||'check';
   root.append(el('div',{class:'chips',role:'group'},[['check','เช็คชื่อ'],['sum','สรุป']].map(([k,tx])=>el('button',{class:'chip','aria-pressed':mode===k,onclick:()=>{st.attMode=k;render()}},tx))));
   return root.append(mode==='check'?attCheck():attSummary()),root;
@@ -1242,17 +1242,30 @@ setInterval(()=>{if(st.dash){const c=$('#dzclock');const n=bkkNow();if(c&&c.firs
 render();
 setInterval(()=>{const a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='SELECT'||a.tagName==='TEXTAREA'))return;if($('#layer').children.length)return;render()},60000);
 window.addEventListener('beforeunload',e=>{if(st.draft&&st.draft.dirty){e.preventDefault();e.returnValue=''}});
+function fsEnc(v){if(Array.isArray(v)){const o=v.filter(x=>x!==undefined).map(fsEnc);return o.some(Array.isArray)?{__aa:o.map(x=>({v:x}))}:o}if(v&&typeof v==='object'){const o={};for(const k in v){if(v[k]!==undefined)o[k]=fsEnc(v[k])}return o}return v}
+function fsDec(v){if(Array.isArray(v))return v.map(fsDec);if(v&&typeof v==='object'){if(Array.isArray(v.__aa))return v.__aa.map(x=>fsDec(x.v));const o={};for(const k in v)o[k]=fsDec(v[k]);return o}return v}
 (function start(){
   const cfg=window.FIREBASE_CONFIG;
   if(!window.firebase||!cfg||!cfg.apiKey||/ใส่|YOUR/.test(cfg.apiKey)){st.cfgMissing=true;st.loaded=true;render();return}
   firebase.initializeApp(cfg);db=firebase.firestore();auth=firebase.auth();st.dbOn=true;
   const fail=()=>{st.dbOn=false;st.loaded=true;render()};
-  db.doc('public/results').onSnapshot(s=>{st.res=s.exists?s.data()||{}:{};st.loaded=true;st.dbOn=true;render()},fail);
-  db.doc('public/notice').onSnapshot(s=>{const d=s.exists&&s.data();st.notice=d&&d.text||'';render()},()=>{});
-  db.doc('config/rules').onSnapshot(s=>{const d=s.exists&&s.data();st.rules=d||{};render()},()=>{});
-  db.doc('config/points').onSnapshot(s=>{const d=s.exists&&s.data();if(d&&Array.isArray(d.points)&&d.points.length===4)st.cfg.points=d.points;render()},()=>{});
-  db.doc('config/attdays').onSnapshot(s=>{const d=s.exists&&s.data();st.attOff=d&&Array.isArray(d.off)?d.off:[];render()},()=>{});
-  db.collection('live').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());for(const k in liveTimers){if(st.live[k]&&!o[k])o[k]=st.live[k]}st.live=o;render()},()=>{});
+  const pubSubs=[];let pubOn=true;
+  const startPub=()=>{if(pubSubs.length)return;pubOn=true;
+    pubSubs.push(db.doc('public/results').onSnapshot(s=>{st.res=s.exists?fsDec(s.data()||{}):{};st.loaded=true;st.dbOn=true;render()},fail));
+    pubSubs.push(db.doc('public/notice').onSnapshot(s=>{const d=s.exists&&s.data();st.notice=d&&d.text||'';render()},()=>{}));
+    pubSubs.push(db.doc('config/rules').onSnapshot(s=>{const d=s.exists&&s.data();st.rules=d||{};render()},()=>{}));
+    pubSubs.push(db.doc('config/points').onSnapshot(s=>{const d=s.exists&&s.data();if(d&&Array.isArray(d.points)&&d.points.length===4)st.cfg.points=d.points;render()},()=>{}));
+    pubSubs.push(db.doc('config/attdays').onSnapshot(s=>{const d=s.exists&&s.data();st.attOff=d&&Array.isArray(d.off)?d.off:[];render()},()=>{}));
+    pubSubs.push(db.collection('live').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=fsDec(d.data()));for(const k in liveTimers){if(st.live[k]&&!o[k])o[k]=st.live[k]}st.live=o;render()},()=>{}));
+  };
+  const stopPub=()=>{pubSubs.splice(0).forEach(f=>{try{f()}catch(e){}})};
+  startPub();
+  let hideT=null;
+  document.addEventListener('visibilitychange',()=>{
+    clearTimeout(hideT);
+    if(document.hidden){if(st.dash)return;hideT=setTimeout(()=>{if(document.hidden&&!st.dash)stopPub()},20000)}
+    else startPub();
+  });
   let roleSub=null;
   auth.onAuthStateChanged(u=>{
     st.user=u;st.roleLoaded=false;if(roleSub){roleSub();roleSub=null}stopTeacher();st.teacher=null;st.isAdmin=false;
